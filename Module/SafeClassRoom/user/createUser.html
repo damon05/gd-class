@@ -1,0 +1,142 @@
+<div class="navigation">我的应用 > 人员管理 > {{utitle}}</div>
+
+<div id="dragEl" draggable="true" style="height: 310px;width: 220px;line-height: 310px;float: right;margin-top: 10px;text-align: center">
+    <input type="file" name="file" id="fileLoad" style="float: left;"/>
+    <img id="img1" ng-show="showImg" style="width: 220px;height: 310px;" />
+</div>
+
+<div style="margin-right: 230px;">
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>工号：</label>
+            <input type="text" placeholder="请输入工号" maxlength="20" class="width200" ng-model="gh"/>
+        </div>
+
+        <div class="left" style="margin-left: 12px;">
+            <label>曾用名：</label>
+            <input type="text" placeholder="请输曾用名" class="width200" maxlength="50" ng-model="cym"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>姓名：</label>
+            <input type="text" placeholder="请输入姓名" maxlength="36" class="width200" ng-model="xm"/>
+        </div>
+
+        <div class="left">
+            <label>英文姓名：</label>
+            <input type="text" placeholder="请输入英文名字" maxlength="50" class="width200" ng-model="ywxm"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label>人员类型：</label>
+            <select class="width220" ng-model="urylxNum" ng-options="m.code as m.name for m in uRylxs"></select>
+        </div>
+
+        <div class="left">
+            <label>岗位：</label>
+            <select class="width220" ng-model="ugwNum" ng-options="m.code as m.name for m in uGws"></select>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label>姓名拼音：</label>
+            <input type="text" placeholder="请输入姓名拼音" class="width200" ng-model="xmpy"/>
+        </div>
+
+        <div class="left ml24">
+            <label>性别：</label>
+            <select class="width220" ng-model="sex" ng-options="m.code as m.name for m in useSex"></select>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label>出生日期：</label>
+            <input type="date" class="width200" ng-model="csrq" />
+        </div>
+
+        <div class="left ml24">
+            <label>籍贯：</label>
+            <input type="text" class="width200" maxlength="50" ng-model="placeNum"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>国籍：</label>
+            <input type="text" class="width200" maxlength="50" ng-model="nationalityNum"/>
+        </div>
+
+        <div class="left ml24">
+            <label>民族：</label>
+            <input type="text" class="width200" maxlength="50" ng-model="nationNum"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>账号：</label>
+            <input type="text" class="width200" maxlength="50" ng-model="zhanghao"/>
+        </div>
+
+        <div class="left ml24">
+            <label>密码：</label>
+            <input type="text" class="width200" maxlength="50" ng-model="mima"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label class="left">邮箱(找回密码专用)：</label>
+            <input type="text" class="width200" ng-model="email"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix" ng-show="false">
+        <div class="left">
+            <label>出生地点：</label>
+            <select class="width152" ng-model="provincesNum" ng-change="selectProvinces();" ng-options="m.code as m.name for m in provinces"></select>
+            <span> 省 </span>
+            <select class="width152" ng-model="citysNum" ng-change="selectCitys();" ng-options="m.code as m.name for m in citys"></select>
+            <span> 市 </span>
+            <select class="width152" ng-model="downsNum" ng-options="m.code as m.name for m in downs"></select>
+            <span> 区 </span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix" ng-show="false">
+        <div class="left mr15">
+            <label>证件类型：</label>
+            <select class="width220" ng-model="idTypeNum" ng-options="m.code as m.name for m in idType"></select>
+        </div>
+        <div class="left mr15">
+            <label>证件号码：</label>
+            <input type="text" class="width200" placeholder="请输入证件号码" ng-model="zjhm"/>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix" ng-show="false">
+        <div class="left mr15">
+            <label>婚姻状况：</label>
+            <select class="width220" ng-model="maritalStatusNum" ng-options="m.code as m.name for m in maritalStatus"></select>
+        </div>
+
+        <div class="left">
+            <label>港澳台外：</label>
+            <select class="width220" ng-model="macaoNum" ng-options="m.code as m.name for m in macao"></select>
+        </div>
+    </div>
+</div>
+
+
+<div class="mt10" ng-show="showButton">
+    <button class="btnGreen ml65" ng-click="createUser();">保存</button>
+    <button class="btnGreen" ng-click="cancelUser();">取消</button>
+</div>
+
+

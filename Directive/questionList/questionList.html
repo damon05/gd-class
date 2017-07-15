@@ -1,0 +1,79 @@
+<div>
+    <table width="70%" style="margin:5px auto;">
+        <tbody style="text-align:left">
+            <tr><td style="width:120px;" align="center"><img src="resource/images/u4.png" /></td><td align="center" style="width:120px;"><img src="resource/images/u4_line.png" /></td><td style="width:120px;" align="center"><img src="resource/images/u4.png" /></td></tr>
+            <tr><td style="width:120px;" align="center">维护作业基本信息</td><td></td><td style="width:120px;" align="center">维护作业内容信息</td></tr>
+        </tbody>
+    </table>
+</div>
+<div style="margin-top:20px;font-size:18px;font-weight:bold;">作业内容信息</div>
+
+<div class="mt10">    
+    <label>题目添加方式：</label><button ng-show="showAddBtn" class="btnGreen" style="margin-left:20px;" ng-click="createQuestion();">添加题目</button><button ng-show="showAddBtn" class="btnGreen" style="margin-left:20px;width:150px;" ng-click="copyItem();">选择现有作业题目</button>
+</div>
+
+
+
+<!--<div class="mt10 tr">-->
+<!--<button class="nextBtn">上一页</button>-->
+<!--<button class="nextBtn">下一页</button>-->
+<!--</div>-->
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>        
+        <th>题目编号</th>
+        <th>题目</th>
+        <th>答案类型</th>
+        <th>答案</th>
+        <th>排序</th>
+        <th>分数</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in List">        
+        <td style="word-wrap:break-word;" width="5%">{{item.Code}}</td>
+        <td style="word-wrap:break-word;" width="15%">{{item.Title}}</td>
+        <td style="word-wrap:break-word;" width="5%" ng-if="item.Type==0">单选</td>
+        <td style="word-wrap:break-word;" width="5%" ng-if="item.Type==1">多选</td>        
+        <td style="word-wrap:break-word;" width="5%">{{item.Answer}}</td>
+        <td style="word-wrap:break-word;" width="5%">{{item.Sort}}</td>
+        <td style="word-wrap:break-word;" width="5%">{{item.Score}}</td>
+        <td style="word-wrap:break-word;" width="15%">
+            <button ng-click="edit(item);" ng-show="showAddBtn" style="width:35px;">修改</button>
+            <button ng-click="delete(item);" ng-show="showAddBtn" >删除</button>
+            <button ng-click="detail(item);" style="width:35px;" ng-show="!showAddBtn">详情</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>
+
+
+<script type="text/ng-template" id="questionCopyTmpl">
+
+    <div class="dialog_title">
+        {{popTitle}}
+    </div>
+    <div class="ui-dialog-content">
+        <div class="clearfix">
+            <select-homework  show-add-btn="{show:true}" from="{val:'safe'}" choose-callback="getSelClass"></select-homework>
+        </div>
+        <!--<div class="clearfix" style="text-align:center;margin-top:10px;">
+            <button type="button" class="btnRed" style="width: 15%; font-size: 18px;min-height:30px;"
+                    ng-click="closeThisDialog()">
+                确定
+            </button>
+            <button type="button" class="btnRed" style="width: 15%; font-size: 18px;min-height:30px;"
+                    ng-click="closeThisDialog()">
+                关闭
+            </button>
+        </div>-->
+    </div>
+
+</script>

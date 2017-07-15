@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="/app.css" rel="stylesheet" type="text/css" />
+    <script src="/resource/lib/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+    <div class="login-header-wrap"><div class="login-header"><a><img src="/resource/images/logo.jpg" width="310" height="70" alt="安立方"></a></div></div>
+    <!-- main -->
+    <div class="login-wrap">
+        <div class="login-banner">
+            <div class="login-main">
+                <div style="text-align: center;font-weight: bold;">密码找回</div>
+                <div class="login-inputs" style="height: 44px;margin-top: 16px;">
+                    <input type="text" id="gh" placeholder="请输入工号"  />
+                </div>
+                <div class="out-login">
+                        <span>
+                            <input type="radio" name="prostatus" value="2" id="r1" checked>
+                            <label for="r1">安全教室</label>
+                        </span>
+                        <span>
+                            <input type="radio" name="prostatus" value="1" id="r2">
+                            <label for="r2">教师</label>
+                        </span>
+                </div>
+                <div class="login-btn"><a id="forget">发送邮件</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="login-footer">
+        <p><span>网站备案:京ICP备12007931号-5</span><span>京公安网备 110105012777</span><span>版权所有©2015</span></p>
+        <p><span>北京森霖木教育科技股份有限公司官网</span><span>技术支持: 大唐互联网+</span></p>
+    </div>
+</body>
+</html>
+<script>
+
+    $("#forget").click(function(){
+        if($("#gh").val() == ""){
+            alert("必须输入工号!");
+            return;
+        }
+        $.ajax({
+            url:"/cmsapi/user/forget?account="+$("#gh").val()+"&type="+$("input[type=radio][name=prostatus]:checked").attr("value"),
+            type:"post",
+            success:function(d){
+                d = eval("("+d+")");
+                if(d.state){
+                    alert("邮件已发送");
+                }else{
+                    alert(d.status.message);
+                }
+
+            }
+        })
+    })
+</script>

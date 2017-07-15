@@ -1,0 +1,49 @@
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>所属学校：</label>
+        <select class="width140" ng-model="xxNum" ng-options="m.code as m.name for m in xx"></select>
+    </div>
+    <div class="left">
+        <label>教室建设时间：</label>
+        <input type="date" placeholder="请选择开始时间" class="width150" ng-model="beginDate"/>
+        <span> 到 </span>
+        <input type="date" placeholder="请选择结束时间" class="width150" ng-model="endDate"/>
+    </div>
+    <div class="left">
+        <button class="btnGreen ml65" ng-click="searchRoom();">查询</button>
+        <button ng-show="showAddBtn.show" class="btnGreen" ng-click="createRoom();">注册教室</button>
+    </div>
+</div>
+
+<div class="grayLine"></div>
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>
+        <th ng-show="showCk.show"><input type="checkbox" ng-model="ckAll" /></th>
+        <th>租户号</th>
+        <th>学校名称</th>
+        <th>教室名称</th>
+        <th>教室地址</th>
+        <th>教室授权账号</th>
+        <th>创建时间</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in roomList">
+        <td ng-show="showCk.show"><input type="checkbox" ng-model="item.ck" /></td>
+        <td>{{item.tanentid}}</td>
+        <td>{{item.xxmc}}</td>
+        <td><a ng-click="editRoom(item);">{{item.jsmc}}</a></td>
+        <td>{{item.jsdz}}</td>
+        <td>{{item.sqzh}}</td>
+        <td>{{item.showTime}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>

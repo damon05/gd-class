@@ -1,0 +1,56 @@
+<div class="navigation">我的应用 > 作业管理 > {{t_title}}</div>
+
+
+<div class="clearfix" style="height:200px;">
+    <div class="searchRow clearfix">
+        <div class="left">
+            <label>题目标题：</label>
+            <input type="text" maxlength="60" class="width200" ng-model="Title" />
+        </div>
+    </div>
+    <div class="searchRow clearfix" >
+        <div class="left">
+            <label>分数：</label>
+            <input type="text" maxlength="10" class="width200" ng-model="Score" />
+        </div>
+    </div>
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label>答案类型：</label>
+            <select class="width287" ng-model="Type" ng-options="m.code as m.name for m in wxQuestionType"></select>
+        </div>
+    </div>
+    <div class="searchRow clearfix">
+        <div class="left">
+            <label>媒体类型：</label>
+            <select class="width287" ng-model="Restype" ng-options="m.code as m.name for m in wxQuestionResType"></select>
+        </div>
+    </div>
+    <div class="searchRow clearfix" ng-show="Restype==2||Restype==3" style="min-height:30px;">
+
+        <div class="left mr15">
+            <label>内容地址：</label>
+            <input type="text" maxlength="2000" class="width200" ng-model="ResourceURL" />
+        </div>
+    </div>
+
+    <div class="searchRow clearfix" ng-show="Restype==1" style="min-height:30px;">
+        <div class="left mr15">
+            <label>内容图片：</label>
+            <button class="nextBtn mr15 ml14 pr" id="btnUploadImg" ng-show="showButton">
+                上传文件
+                <input type="file" class="inputFile" name="file1" id="file1" />
+            </button>
+            <span ng-show="showImg"><a target="_blank" href="{{ResourceURL}}">查看</a></span>
+            <span class="red1" ng-bind="r1"></span>
+            <span contenteditable="true" ng-show="false" ng-bind="ResourceURL"></span>
+            <span>尺寸800*不限长度, 大小1000kb</span>
+        </div>
+    </div>
+
+</div>
+<div class="mt10 clearfix"  style="height:20px;">
+    <button class="btnGreen" ng-show="showButton" ng-click="createQuestion();">保存提交</button><button class="btnGreen" style="margin-left:10px;" ng-click="backToHomework();">返回题目列表</button>
+</div>
+<question-item-list ng-show="showQuestionItem" show-ck="{show:false}" show-add-btn="showButton" from="{val:'safe'}"></question-item-list>
+

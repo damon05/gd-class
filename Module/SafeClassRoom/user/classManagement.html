@@ -1,0 +1,71 @@
+<div class="navigation">我的应用 > 基本信息 > 班级管理</div>
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>所属学校：</label>
+        <select class="width140" ng-model="xxNum" ng-change="changeXx();" ng-options="m.code as m.name for m in xx"></select>
+    </div>
+    <div class="left">
+        <label>学年：</label>
+        <select class="width140" ng-model="xnNum" ng-change="changeXn();" ng-options="m.code as m.name for m in xn"></select>
+    </div>
+
+    <div class="left">
+        <label>年级：</label>
+        <select class="width140" ng-model="njNum" ng-change="changeNj();" ng-options="m.code as m.name for m in nj"></select>
+    </div>
+
+    <div class="left">
+        <label>班级：</label>
+        <select class="width140" ng-model="bjNum" ng-options="m.code as m.name for m in bj"></select>
+    </div>
+
+    <div class="left">
+        <button class="btnGreen ml65" ng-click="seachBj();">查询</button>
+    </div>
+</div>
+
+<div class="classDown">
+    <div class="mb">下载模板：<a href="/cmsapi/downloadfile/class.xlsx">班级信息导入模板</a></div>
+    <div ng-show="errorXsl" class="mb">错误信息：<a href="/file{{errorUrl}}">查看错误详情</a></div>
+    <div>
+        上传数据：
+        <input type="file" id="fileLoad">
+        <!--<button class="btnGreen ml65">选择文件</button>-->
+        选择年级:<select class="width140" ng-model="njbh" ng-options="m.code as m.name for m in NIANJI"></select>
+        <button class="btnGreen ml65" ng-click="uploadFile();">批量导入</button>
+        <a class="{{btnCls}}" ng-disabled="isDisabled" ng-href="{{isDisabled?'':downLink}}">下载(Excel格式)</a>
+        <button class="btnGreen ml65" ng-click="updateClass();">升级年级</button>
+    </div>
+</div>
+
+<div class="grayLine"></div>
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>学年</th>
+        <th>年级</th>
+        <th>班级</th>
+        <th>班主任姓名</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in bjList">
+        <td>{{item.lineid}}</td>
+        <td>{{item.xn}}</td>
+        <td>{{item.njmc}}</td>
+        <td>{{item.bjmc}}</td>
+        <td>{{item.xm}}</td>
+        <td><button ng-click="del(item);">删除</button></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>
+
+

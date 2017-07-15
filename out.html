@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+    <link type="text/css" rel="stylesheet" href="app.css" />
+    <script src="resource/lib/jquery-1.11.2.min.js"></script>
+    <script src="resource/js/core.js"></script>
+
+    <!--<script>-->
+        <!--var _hmt = _hmt || [];-->
+        <!--(function() {-->
+            <!--var hm = document.createElement("script");-->
+            <!--//hm.src = "//hm.baidu.com/hm.js?135271bf9ebffc6b1be385582f1ec0d3";-->
+            <!--hm.src = "//101.201.104.86:8188/tj.js";-->
+            <!--var s = document.getElementsByTagName("script")[0];-->
+            <!--s.parentNode.insertBefore(hm, s);-->
+        <!--})();-->
+    <!--</script>-->
+    <!--<script src="Resource/lib/tj.js"></script>-->
+
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <input type="button" class="btnGreen" id="doSubmit" value="提交" />
+</body>
+</html>
+<script>
+
+    var _code  = jsCoreMethod.getQueryString("code");
+    var _skbh  = jsCoreMethod.getQueryString("skbh");
+
+    if(_skbh){
+        $("#doSubmit").show();
+    }else{
+        $("#doSubmit").hide();
+    }
+
+    var data = null;
+    $.ajax({
+        type:"get",
+        url:"/api/questionnaire/query?code="+_code+"&skbh="+_skbh,
+        success:function(d){
+            d = eval("("+d+")");
+            if(d.status.code == "1"){
+                data = d.data;
+                render($("#container"), data);
+            }else{
+                alert(d.status.message);
+            }
+        }
+    })
+
+    function render(c,data){
+        renderGaiyao(c,data);
+
+        var html = "";
+        var zj = data.data;
+        var html = "<div>";
+        for(var i=0;i<zj.length;i++){
+
+            html += "<div class='outZjBox' code='"+zj[i].code+"'>";
+
+            //章节
+            html += "<div class='outZjTitle'>"+zj[i].title+"</div>";
+            //题目
+            var tm = zj[i].tms;
+            html += "<div>";
+            for(var j = 0;j<tm.length;j++){
+
+                html += "<div class='outZjSubject'>"+tm[j].sort+" :"+tm[j].name+"</div>";
+
+                var da = tm[j].items;
+
+                var pingfenID ="__" + Math.ceil(Math.random()*100000);
+
+                html += "<div class='heightAuto clearfix' code='"+tm[j].code+"' cate='"+tm[j].cate+"'>";
+                for(var k=0;k<da.length;k++){
+                    html += "<div style='padding: 2px 0'>";
+                    if(tm[j].cate == "checkbox"){
+                        html += "<input type='checkbox' code='"+da[k].code+"' />";
+                        html += "<span class='ml5'>"+da[k].name+"</span>";
+                    }else if(tm[j].cate == "radio"){
+                        html += "<input type='radio' name='"+pingfenID+"' code='"+da[k].code+"'/>";
+                        html += "<span class='ml5'>"+da[k].name+"</span>";
+                    }else if(tm[j].cate == "textbox"){
+                        html += "<span class='mr5'>"+da[k].title+"</span>";
+                        html += "<input type='text' code='"+da[k].code+"'/>";
+                    }else if(tm[j].cate == "pingfen"){
+                        html += "<input type='radio' name='"+pingfenID+"' code='"+da[k].code+"' num ='"+da[k].number+"' />";
+                        html += "<span class='ml5'>"+da[k].name+"</span>";
+                    }
+                    html += "</div>";
+                }
+                html += "</div>";
+            }
+            html += "</div>";
+            html += "</div>";
+        }
+        html += "</div>";
+        $(c).append(html);
+    }
+
+    //概要
+    function renderGaiyao(c,data){
+        var html = "";
+        html += "<div class='outTop'>";
+        html += "<div class='outTopTitle'>"+data.title+"</div>";
+        html += "<div class='outTopTip'>"+data.content+"</div>";
+        html += "</div>";
+
+        $(c).append($(html));
+    }
+
+    function getScores(data,selectedItems){
+        var scores = 0;
+        if(data.scores == 0){
+            return 0;
+        }
+        var tms = data.items;
+        var bzCodes = [];
+        //得到当前题目的标准答案的codes
+        for(var i=0;i<tms.length;i++){
+            if(tms[i].bz){
+                bzCodes.push(tms[i].code);
+            }
+        }
+        //获取当前选中项的codes
+        var sCodes = [];
+        for(var i=0;i<selectedItems.length;i++){
+            sCodes.push(selectedItems[i].chooseCode);
+        }
+
+        if(bzCodes.length == sCodes.length){
+            var count = 0;
+            for(var i =0;i<sCodes.length;i++){
+                for(var k=0;k<bzCodes.length;k++){
+                    if(sCodes[i] == bzCodes[k]){
+                        count++;
+                        break;
+                    }
+                }
+            }
+            if(count != bzCodes.length){
+                scores = 0;
+            }else{
+                scores = data.scores;
+            }
+        }else{
+            scores = 0;
+        }
+        return scores;
+    }
+
+    function getParams(data){
+        var _d= data.data;
+        var res = [];
+        for(var i=0;i<_d.length;i++){
+            var tmpJson = {code: _d[i].code,title:_d[i].title,tms:[]};
+            var tmp = _d[i].tms;
+            for(var k=0;k<tmp.length;k++){
+                var code = tmp[k].code;
+                var cate = tmp[k].cate;
+                var items = getAnswerByTMCode(code,cate);
+                tmpJson.tms.push({code:code,cate:cate,scores:getScores(tmp[k],items),bida:tmp[k].bida,title:tmp[k].name,items:items});
+            }
+            res.push(tmpJson);
+        }
+        return res;
+    }
+
+    function getAnswerByTMCode(code,cate){
+        var res = [];
+        if(cate == "checkbox" || cate == "radio"){
+            $("div[code='"+code+"'] input[type="+cate+"]:checked").each(function(){
+                res.push({chooseCode:$(this).attr("code"),title:""});
+            })
+        }
+        else if(cate == "textbox"){
+            $("div[code='"+code+"'] input[type=text]").each(function(){
+                res.push({chooseCode:$(this).attr("code"),title:$(this).val()});
+            })
+        }else if(cate == "pingfen"){
+            $("div[code='"+code+"'] input[type=radio]:checked").each(function(){
+                res.push({chooseCode:$(this).attr("code"),title:$(this).attr("num")});
+            })
+        }
+        return res;
+    }
+
+    $("#doSubmit").click(function(){
+        var s = getParams(data);
+
+        //code --- 模版编号
+        //leaseholderId -- 租户编码
+        //studentId -- 工号
+        var ran = Math.ceil(Math.random()*1000000);
+        $.ajax({
+            type:"post",
+            url:"/api/questionnaire/answer",
+            data:{skbh:_skbh,code:_code,studentId:ran,content:jsCoreMethod.convertStringJson(s)},
+            success:function(d){
+                d = eval("("+d+")");
+                alert(d.status.message);
+            }
+        })
+    })
+
+    //pv uv
+    var pvRan = Math.ceil(Math.random()*10000000);
+    jsCoreMethod.setCookie("Hm_lpvt_wid",pvRan);
+
+    var uvRan = jsCoreMethod.getCookie("Hm_lvt_wid");
+
+    if(!uvRan){
+        uvRan = Math.ceil(Math.random()*10000000);
+        jsCoreMethod.setCookie("Hm_lvt_wid",uvRan);
+    }
+
+    $.ajax({
+        url:"/statis?pvwid="+pvRan+"&uvwid="+uvRan,
+        type:"get"
+    })
+</script>

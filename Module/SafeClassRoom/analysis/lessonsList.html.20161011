@@ -1,0 +1,86 @@
+
+<div class="navigation">我的应用 > 数据分析 > 授课记录</div>
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>课程系列：</label>
+        <select class="width220" ng-model="kcxlNum" ng-change="changeKcxl()" ng-options="m.code as m.name for m in kcxl"></select>
+    </div>
+
+    <div class="left mr15">
+        <label>课程：</label>
+        <select class="width220" ng-model="kcNum" ng-options="m.code as m.name for m in kc"></select>
+    </div>
+
+    <div class="left">
+        <label>授课时间：</label>
+        <input type="date" placeholder="请选择开始时间" class="width150" ng-model="bDate"/>
+        <span> 到 </span>
+        <input type="date" placeholder="请选择结束时间" class="width150" ng-model="eDate"/>
+    </div>
+</div>
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年：</label>
+        <select class="width220" ng-model="xnNum" ng-change="changeXn();" ng-options="m.code as m.name for m in xn"></select>
+    </div>
+
+    <div class="left mr15">
+        <label>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
+        <select class="width220" ng-model="njNum" ng-change="changeNj();" ng-options="m.code as m.name for m in nj"></select>
+    </div>
+
+    <div class="left mr15">
+        <label>班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</label>
+        <select class="width220" ng-model="bjNum" ng-options="m.code as m.name for m in bj"></select>
+    </div>
+</div>
+
+<div class="mt10">
+    <button class="btnGreen ml65 mr15" ng-click="search();">查询</button>
+    <a class="{{btnCls}}" ng-disabled="isDisabled" ng-href="{{isDisabled?'':downLink}}">下载(Excel格式)</a>
+</div>
+
+<div class="grayLine"></div>
+
+<!--<div class="mt10 tr">-->
+    <!--<button class="nextBtn">上一页</button>-->
+    <!--<button class="nextBtn">下一页</button>-->
+<!--</div>-->
+
+<table class="tableBox" border="1">
+    <thead>
+        <tr>
+            <th>授课编号</th>
+            <th>学年</th>
+            <th>年级</th>
+            <th>班级</th>
+            <th>班主任</th>
+            <th>课程系列</th>
+            <th>课程</th>
+            <th>上课学生人数</th>
+            <!--<th>教师对课程评价</th>-->
+            <!--<th>学生对课程评价</th>-->
+            <th>授课时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in lessonsList">
+            <td>{{item.skbh}}</td>
+            <td>{{item.xn}}</td>
+            <td>{{item.njmc}}</td>
+            <td>{{item.bjmc}}</td>
+            <td>{{item.xm}}</td>
+            <td>{{item.kcmc}}</td>
+            <td>{{item.kcxlmc}}</td>
+            <td><a ng-click="showStudents(item);">{{item.stduentCount}}</a></td>
+            <!--<td><a ng-click="goJsPingjia(item.teacherWenjuan);">查看评价</a></td>-->
+            <!--<td><a ng-click="goXsPingjia(item.studentWenjuan);">查看评价</a></td>-->
+            <td>{{item.showTime}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>

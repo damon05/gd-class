@@ -1,0 +1,80 @@
+<div class="grayLine"></div>
+<div class="mt10">
+   
+    <button ng-show="showAddBtn" class="btnGreen" ng-click="createQuestionItem();">添加答案</button>
+</div>
+
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>        
+        <th>答案编号</th>
+        <th>答案内容</th>
+        <th>是否正确</th>
+        <th>排序</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in List">        
+        <td style="word-wrap:break-word;" width="10%">{{item.Mark}}</td>
+        <td style="word-wrap:break-word;" width="30%">{{item.Content}}</td>
+        <td ng-if="item.IsAnswer==true">是</td>
+        <td ng-if="item.IsAnswer==false">否</td>
+        <td>{{item.Sort}}</td>
+        <td style="word-wrap:break-word;" width="15%">
+            <button ng-click="edit(item);" ng-show="showAddBtn">修改</button>
+            <button ng-click="delete(item);" ng-show="showAddBtn">删除</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>
+
+
+<script type="text/ng-template" id="questionItemEditTmpl">
+    <div class="dialog_title" style="text-align:center; ">
+        {{popTitle}}
+    </div>
+    <div >
+        <div class="clearfix">
+
+            <div class="searchRow clearfix">
+                <div class="left">
+                    <label>答案内容：</label>
+                    <input type="text" maxlength="60" class="width200" ng-model="selectedItem.Content" />
+                </div>
+            </div>
+            <div class="searchRow clearfix">
+
+                <div class="left mr15">
+                    <label>是否正确：</label>
+                    <label><input type="radio" ng-value=true  ng-model="selectedItem.IsAnswer" />是</label><label><input type="radio" ng-value=false  ng-model="selectedItem.IsAnswer" />否</label>
+                </div>
+            </div>
+            <div class="searchRow clearfix">
+                <div class="left">
+                    <label>排序：</label>
+                    <input type="text" maxlength="60" class="width200" ng-model="selectedItem.Sort" />
+                </div>
+            </div>
+
+        </div>
+        <div class="clearfix" style="text-align:center; margin-top:10px;">
+            <button type="submit" class="btnGreen" 
+                    ng-click="save()">
+                保存
+            </button>
+            <button type="button" class="btnGray" 
+                    ng-click="closeThisDialog()">
+                取消
+            </button>
+
+        </div>
+    </div>
+</script>
+

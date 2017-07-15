@@ -1,0 +1,93 @@
+<div class="grayLine"></div>
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>会员账号：</label>
+        <input type="text" placeholder="会员账号" class="width150" ng-model="OpenID" />
+
+    </div>
+    <div class="left">
+        <button class="btnGreen ml65" ng-click="search();">查询</button>
+    </div>
+</div>
+
+
+
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>        
+        <th>会员账号</th>
+        <th>分数</th>
+        <th>正确数</th>
+        <th>错误数</th>
+        <th>正确率</th>
+        <th>开始答题时间</th>
+        <th>完成时间</th>
+        <th>耗时</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in List">        
+        <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.OpenID}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.Score}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.TotalCount-item.WrongCount}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.WrongCount}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.CorrectRate}}%</td>
+        <td style="word-wrap:break-word;" width="6%">{{item.StartTime}}</td>
+        <td style="word-wrap:break-word;" width="6%">{{item.EndTime}}</td>
+        <td style="word-wrap:break-word;" width="6%">{{item.TimeUsed}}</td>
+        <td style="word-wrap:break-word;" width="5%">
+            <button ng-click="detail(item);" >详情</button>           
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>
+
+<script type="text/ng-template" id="questionResultListTmpl">
+    
+    <div class="dialog_title">
+        {{popTitle}}
+    </div>
+    <div class="ui-dialog-content">
+        <div class="clearfix">
+
+            <table class="tableBox" border="1">
+                <thead>
+                    <tr>
+                        <th>题目编号</th>
+                        <th>题目</th>
+                        <th>答案类型</th>
+                        <th>正确答案</th>
+                        <th>会员答案</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr ng-repeat="item in memberQuestionResultList">
+                        <td style="word-wrap:break-word;" width="10%">{{item.Code}}</td>
+                        <td style="word-wrap:break-word;" width="20%">{{item.QuestionTitle}}</td>
+                        <td style="word-wrap:break-word;" width="5%" ng-if="item.QuestionType==0">单选</td>
+                        <td style="word-wrap:break-word;" width="5%" ng-if="item.QuestionType==1">多选</td>
+                        <td style="word-wrap:break-word;" width="5%">{{item.CorrectAnswer}}</td>
+                        <td style="word-wrap:break-word;" width="5%">{{item.QuestionItemCode}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="clearfix" style="text-align:center;margin-top:10px;">
+            <button type="button" class="btnRed" style="width: 15%; font-size: 18px;min-height:30px;"
+                    ng-click="closeThisDialog()">
+                关闭
+            </button>
+        </div>
+    </div>
+ 
+</script>

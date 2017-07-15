@@ -1,0 +1,6 @@
+共<span class="pagingPageNum" ng-bind="totalProCount"></span>条
+<input type="button" class="pagingBtn" value="上一页" ng-click="prev()"/>
+<input type="button" class="pagingBtn" value="下一页" ng-click="next()" />
+当前第<span class="pagingPageNum" ng-bind="currentIndex"></span>/<span class="pagingPageNum" ng-bind="allPages"></span>页
+到<input type="text" style="width:20px" class="mb20" ng-model="enterIndex"/>页
+<input type="button" value="确定" class="pagingBtn" ng-click="enterValueSearch()"/>

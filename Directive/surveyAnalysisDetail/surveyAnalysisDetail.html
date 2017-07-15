@@ -1,0 +1,32 @@
+
+<form method="post" target="_blank" action="/cmsapi/template/downloadStatistics">
+    <input type="hidden" id="data" name="data" />
+    <input class="btnGreen" id="downLoad" type="submit" value="下载(Excel格式)" />
+</form>
+
+<div style="text-align: center;font-size: 30px;margin-top: 10px;">{{data.title}}</div>
+
+<div ng-repeat="item in items">
+    <span>第{{item.sort}}题:</span>
+    <span>{{item.name}}</span>
+    <span ng-show="scoresShow">分数:{{item.scores}}</span>
+    <table class="tableBox" border="1">
+        <thead>
+        <th>选项</th>
+        <th>小计</th>
+        <th>比例</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="x in item.children">
+            <td width="30%">{{x.name}}{{getBz(x.bz)}}</td>
+            <td width="30%">{{x.pcount}}</td>
+            <td>{{x.percent}}%</td>
+        </tr>
+        <tr style="background-color: #D7E5EE">
+            <td>本地有效填写人数</td>
+            <td>{{item.total}}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

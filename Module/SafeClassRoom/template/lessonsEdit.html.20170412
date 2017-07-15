@@ -1,0 +1,167 @@
+<div class="navigation">我的应用 > 教室管理 > 教师备课</div>
+
+<div class="yl_top">
+    <div>安全教育平台</div>
+</div>
+
+<div class="searchRow clearfix">
+    <div class="left">
+        <label>课程系列：</label>
+        <input type="text" readonly class="width140" ng-model="kcxlmc"/>
+    </div>
+
+    <div class="left">
+        <label>课程编号：</label>
+        <input type="text" readonly class="width140" ng-model="kcbh"/>
+    </div>
+
+    <div class="left">
+        <label>课程名称：</label>
+        <input type="text" readonly class="width140" ng-model="kcmc"/>
+    </div>
+</div>
+
+<div class="yl_center">
+    <div class="yl_center_left">
+        <div class="yl_content_l">
+            <h1><a target="_blank" href="{{kjdz}}">{{kcmc}}</a></h1>
+            <p>来源于：<span>{{from}}</span>｜分类：<span>{{kcxlmc}}</span></p>
+            <div class="yl_video_box">
+                <img style="width: 270px;height: 270px;" id="img1" />
+            </div>
+        </div>
+        <div class="yl_content_r">
+            <div class="yl_content_r_item">
+                <h1>课程描述</h1>
+                <p>{{kcjj}}</p>
+            </div>
+
+            <div class="yl_content_r_item">
+                <h1>课程内容</h1>
+                <p>{{kcnr}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div style="border-style:dotted solid double dashed;padding: 10px 10px 10px 0;border-radius: 10px;margin-top: 10px;">
+        <div class="mt10">
+            <button class="btnGreen ml65" ng-click="save();">保存</button>
+        </div>
+
+        <div class="searchRow clearfix">
+            <div class="mr15">
+                <label style="margin-left: 70px;">学生作业ID：</label>
+                <input type="text" class="width200" ng-model="tmpId1" />
+                <label class="ml12" style="margin-left: 82px;">学生作业名称：</label>
+                <input type="text" class="width248" ng-model="tmpName1"/>
+                <input type="button" value="选择问卷" class="nextBtn" ng-click="showTmpDialog(1);" />
+            </div>
+        </div>
+
+        <div class="searchRow clearfix">
+            <div class="mr15">
+                <label>学生对课程评价问卷ID：</label>
+                <input type="text" class="width200" ng-model="tmpId2" />
+                <label class="ml12">学生对课程评价问卷名称：</label>
+                <input type="text" class="width248" ng-model="tmpName2"/>
+                <input type="button" value="选择问卷" class="nextBtn" style="background-color: gray" ng-click="showTmpDialog(2);" />
+            </div>
+        </div>
+
+        <div class="searchRow clearfix">
+            <div class="mr15">
+                <label style="margin-left: 42px;">课堂作业问卷ID：</label>
+                <input type="text" class="width200" ng-model="tmpId3" />
+                <label style="margin-left: 39px;">课堂作业问卷ID名称：</label>
+                <input type="text" class="width248" ng-model="tmpName3"/>
+                <input type="button" value="选择问卷" class="nextBtn" style="background-color: gray" ng-click="showTmpDialog(3);" />
+            </div>
+        </div>
+
+        <div class="searchRow clearfix">
+            <div class="mr15">
+                <label style="margin-left: 42px;">课后作业问卷ID：</label>
+                <input type="text" class="width200" ng-model="tmpId4" />
+                <label style="margin-left: 39px;">课后作业问卷ID名称：</label>
+                <input type="text" class="width248" ng-model="tmpName4"/>
+                <input type="button" value="选择问卷" class="nextBtn" style="background-color: gray" ng-click="showTmpDialog(4);" />
+            </div>
+        </div>
+
+        <div class="searchRow clearfix">
+            <div class="mr15">
+                <label style="margin-left: 85px;">开始时间：</label>
+                <input type="date" class="width200" ng-model="begin" />
+                <label style="margin-left: 124px;">结束时间：</label>
+                <input type="date" class="width248" ng-model="end"/>
+            </div>
+        </div>
+    </div>
+
+
+<div style="border-style:dotted solid double dashed;padding: 10px 10px 10px 0;border-radius: 10px;margin-top: 10px;">
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 67px;">课程标准：</label>
+            <span style="margin-right: 11px;" ng-show="s1"><a target="_blank" href="{{kcbz}}">查看</a></span>
+            <span class="f10">注：用于对主题课程的指导，其中包含课程的设计思路，各学段的课程目标，课程的主要内容，课程的实施与管理等内容。</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 95px;">教案：</label>
+            <span style="margin-right: 11px;" ng-show="s2"><a target="datetime-local" href="{{jiaoan}}">查看</a></span>
+            <span class="f10">注：指导教师进行授课，其中包含课程目标（知识目标、能力目标、情感、态度、价值观），教学重点，教学难点，教学手段及方法，教学过程等内容。</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 67px;">课程教材：</label>
+            <span style="margin-right: 11px;" ng-show="s3"><a target="_blank" href="{{kcjc}}">查看</a></span>
+            <span class="f10">注：指导教师授课</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 55px;">多媒体课件：</label>
+            <span style="margin-right: 11px;" ng-show="s4"><a target="_blank" href="{{dmtkj}}">查看</a></span>
+            <span class="f10">注：用于教师课堂中授课。</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label>教具使用说明及清单：</label>
+            <span style="margin-right: 11px;" ng-show="s6"><a target="_blank" href="{{jjsysmjqd}}">查看</a></span>
+            <span class="f10">注：指导教师进行教具的使用方法及用途。</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 67px;">课程素材：</label>
+            <span style="margin-right: 11px;" ng-show="s6"><a target="_blank" href="{{kcsc}}">查看</a></span>
+            <span class="f10">注：用于教师及学生对课程的深入了解。</span>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15">
+            <label style="margin-left: 95px;">题库：</label>
+            <span style="margin-right: 11px;" ng-show="s7"><a target="_blank" href="{{tiku}}">查看</a></span>
+            <span class="f10">注：学生的课上、课下的作业。</span>
+        </div>
+    </div>
+</div>
+
+<div class="mask" ng-if="showDialog">
+    <div class="mask_container">
+        <p class="close_mask" ng-click="closeDialog();">X</p>
+        <template-list show-add-btn="{show:false}" show-ck="{show:true}" choose-callback="getChooseTmps"></template-list>
+        <button class="btnGreen" ng-click="selectTemplates();">确定</button>
+    </div>
+</div>

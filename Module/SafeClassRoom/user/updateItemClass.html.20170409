@@ -1,0 +1,34 @@
+<div class="navigation">我的应用 > 人员管理 > 升级年级</div>
+
+<div style="margin-right: 230px;">
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>编号：</label>
+            <input type="text" readonly placeholder="请输入工号" maxlength="20" class="width200" ng-model="bh"/>
+        </div>
+        <div class="left mr15 ml24">
+            <label>选择年级：</label>
+            <select ng-model="njs" ng-options="m.code as m.name for m in NIANJI"></select>
+        </div>
+    </div>
+
+    <div class="searchRow clearfix">
+        <div class="left mr15 ml24">
+            <label>班级名称：</label>
+            <input type="text" placeholder="请输入班级名称" maxlength="36" class="width200" ng-model="bjmc"/>
+        </div>
+
+        <div class="left">
+            <label>班级编号：</label>
+            <input type="text" placeholder="请输入班级编号" maxlength="50" class="width200" ng-model="bjbh"/>
+        </div>
+    </div>
+</div>
+
+
+<div class="mt10" ng-show="showButton">
+    <button class="btnGreen ml65" ng-click="createUser();">保存</button>
+    <button class="btnGreen" ng-click="cancelUser();">取消</button>
+</div>
+
+

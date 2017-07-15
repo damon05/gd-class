@@ -1,0 +1,70 @@
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>模版分类：</label>
+        <select class="width287" ng-model="selectType" ng-options="m.code as m.name for m in templateTypes"></select>
+    </div>
+
+    <div class="left">
+        <label>创建时间：</label>
+        <input type="date" placeholder="请选择开始时间" class="width150" ng-model="beginDate"/>
+        <span> 到 </span>
+        <input type="date" placeholder="请选择结束时间" class="width150" ng-model="endDate"/>
+    </div>
+</div>
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>模版类型：</label>
+        <select class="width287" ng-model="selectCate" ng-options="m.code as m.name for m in templateCates"></select>
+    </div>
+    <div class="left">
+        <label>模版名称：</label>
+        <input type="text" placeholder="请输入模版名称" class="width287" ng-model="templateName"/>
+    </div>
+</div>
+
+<div class="mt10">
+    <button class="btnGreen ml65" ng-click="templateListSearch();">查询</button>
+    <button ng-show="showAddBtn.show" class="btnGreen" ng-click="createTemplate();">创建模版</button>
+</div>
+
+<div class="grayLine"></div>
+
+<!--<div class="mt10 tr">-->
+<!--<button class="nextBtn">上一页</button>-->
+<!--<button class="nextBtn">下一页</button>-->
+<!--</div>-->
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>
+        <th ng-show="showCk.show"><input type="checkbox" ng-model="ckAll" /></th>
+        <th>模板分类</th>
+        <th>模板类型</th>
+        <th>模板名称</th>
+        <th>备注</th>
+        <th>更新时间</th>
+        <th>功能操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="item in templateList">
+        <td ng-show="showCk.show"><input type="checkbox" ng-model="item.ck" /></td>
+        <td>{{item.templateTypeName}}</td>
+        <td>{{item.categoryName}}</td>
+        <td><a style="text-decoration: underline;" ng-click="goDetail(item);">{{item.name}}</a></td>
+        <td>{{getRemark(item)}}</td>
+        <td>{{item.showTime}}</td>
+        <td>
+            <button ng-click="preView(item);">预览</button>
+            <button ng-click="editTemplate(item);" ng-show="showAddBtn.show">修改</button>
+            <button ng-click="deleteTemplate(item);" ng-show="showAddBtn.show">删除</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>

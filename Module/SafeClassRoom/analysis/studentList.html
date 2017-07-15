@@ -1,0 +1,27 @@
+
+<div class="navigation">我的应用 > 数据分析 > 上课学生</div>
+
+<table class="tableBox" border="1">
+    <thead>
+    <tr>
+        <th>授课编号</th>
+        <th>姓名</th>
+        <th>工号</th>
+        <th>年级</th>
+        <th>班级</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in stuList">
+            <td>{{item.skbh}}</td>
+            <td>{{item.xm}}</td>
+            <td>{{item.gh}}</td>
+            <td>{{item.njmc}}</td>
+            <td>{{item.bjmc}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="pagingContainer clearfix">
+    <paging get-url="getUrl" callback-fn="directiveCallBack"></paging>
+</div>

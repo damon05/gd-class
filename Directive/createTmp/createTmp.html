@@ -1,0 +1,108 @@
+<div class="navigation">我的应用 > 模版管理 > {{t_title}}</div>
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>模版分类：</label>
+        <select class="width287" ng-model="selectType" ng-options="m.code as m.name for m in templateTypes" ng-change="changeType(selectType);"></select>
+    </div>
+    <div class="left">
+        <label>模版类型：</label>
+        <select class="width287" ng-model="selectCate" ng-options="m.code as m.name for m in templateCates" ng-change="changeCate(selectCate);"></select>
+    </div>
+</div>
+
+<div class="searchRow clearfix" ng-show="showButton">
+    <div class="mt10">
+        <button class="btnGreen ml65" ng-click="goBack();">返回</button>
+        <button class="btnGreen ml65" ng-click="preview();">提交并预览</button>
+        <button class="btnGreen" ng-click="doHoldSubmit();">暂存</button>
+    </div>
+</div>
+
+<div class="right">
+    <ul class="wjtool">
+        <li class="{{cls1}}" ng-click="addGy();">增加概要</li>
+        <li class="{{cls2}}" ng-click="addZj();">增加章节</li>
+        <li class="{{cls}}" ng-click="addDanx();">单选题</li>
+        <li class="{{cls}}" ng-click="addDuox();">多选题</li>
+        <li class="{{cls3}}" ng-click="addPf();">评分题目</li>
+        <li class="{{cls3}}" ng-click="addTk();">填空题</li>
+        <!--<li ng-click="xzTm();">从题库中选择题目</li>-->
+    </ul>
+</div>
+
+<div class="timuleft">
+    <!--问卷开头语-->
+    <div >
+
+        <div class="tmb" ng-if="showGY">
+            <div style="text-align: center;"><input type="text" class="cT_input" maxlength="50" ng-model="data.title"/></div>
+            <div><textarea class="cT_textarea" maxlength="500" ng-model="data.content"></textarea></div>
+            <div class="cT_del">
+                <span><a ng-click="hideGy();">删除概要说明</a></span>
+            </div>
+        </div>
+        <div ng-repeat="item in data.data">
+            <!-- 章节标题-->
+            <div class="cT_item_title"><input type="text" class="cT_input" maxlength="50" ng-model="item.title"/></div>
+            <div class="cT_chapter_oper">
+                <span><a ng-click="addTmByZj(item);">添加题目</a></span>
+                <span><a ng-click="deleteZjItem(item,data.data);">删除</a></span>
+                <span><a ng-click="moveUp(item,data.data);">上移</a></span>
+                <span><a ng-click="moveDown(item,data.data);">下移</a></span>
+            </div>
+            <!--题目描述-->
+            <div class="mb tmb" ng-repeat="itemx in item.tms">
+                <div class="heightAuto clearfix">
+                    <span class="left"><lable>{{itemx.sort}}.</lable><input maxlength="50" type="text" class="cT_input" placeholder="请再次添加题目标题" ng-model="itemx.name" /></span>
+
+                    <span ng-show="showScores" class="left" style="margin-left: 5px;">分数:<input maxlength="50" type="textbox" class="cT_input" ng-model="itemx.scores" /></span>
+                    <span class="right mt10"><input type="checkbox" ng-model="itemx.wtjtt" />无条件跳题</span>
+                    <span class="right mr15 mt10"><input type="checkbox" ng-model="itemx.bida" />必答题</span>
+                </div>
+
+                <!-- 答案选项 -->
+                <div class="heightAuto" ng-repeat="x in itemx.items">
+                    <div class="clearfix" ng-switch="itemx.cate">
+                        <div class="left">
+                            <span ng-switch-when="checkbox">
+                                <input type="checkbox" />
+                                <input type="text" maxlength="50" class="cT_input" ng-model="x.name"/></span>
+                            <span ng-switch-when="radio">
+                                <input type="radio" />
+                                <input type="text" class="cT_input" ng-model="x.name"/>
+                            </span>
+                            <span ng-switch-when="textbox">
+                                <input type="text" maxlength="50" ng-model="x.title" />
+                                <input type="text" maxlength="50" class="cT_input" ng-model="x.name"/>
+                            </span>
+                            <span ng-switch-when="pingfen">
+                                <input type="radio" />
+                                <input type="text" maxlength="50" class="cT_input" ng-model="x.name"/>
+                                分值:<input type="number" ng-model="x.number" />
+                            </span>
+                        </div>
+
+                        <div class="right mt10">
+                            <span><input ng-disabled="isBzFlag" type="checkbox" ng-model="x.bz" />是否标准答案</span>
+                            <img src="resource/images/add.png" ng-click="addDA(x,itemx.items,itemx.cate);" class="cT_topic_oper"/>
+                            <img src="resource/images/delete.png" ng-click="deleteItem(x,itemx.items)" class="cT_topic_oper"/>
+                            <img src="resource/images/up.png" ng-click="upTopDA(x,itemx.items,itemx);" class="cT_topic_oper"/>
+                            <img src="resource/images/down.png" ng-click="upLastDA(x,itemx.items,itemx);" class="cT_topic_oper"/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tr mt10 cT_chapter_oper">
+                    <span><a ng-click="deleteItem(itemx,item.tms)">删除</a></span>
+                    <span><a ng-click="moveUpTm(itemx,item.tms,item);">上移</a></span>
+                    <span><a ng-click="moveDownTm(itemx,item.tms,item);">下移</a></span>
+                    <span><a ng-click="upTop(itemx,item.tms,item);">最前</a></span>
+                    <span><a ng-click="upLast(itemx,item.tms,item);">最后</a></span>
+                </div>
+                <div>当前题型:{{getTiXing(itemx.cate)}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+

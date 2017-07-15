@@ -1,0 +1,32 @@
+
+
+<!-- header -->
+<div class="login-header-wrap"><div class="login-header"><a href="javascript:;"><img src="../../resource/images/logo.jpg" width="310" height="70" alt="安立方"></a></div></div>
+<!-- main -->
+<div class="login-wrap">
+    <div class="login-banner">
+        <div class="login-main">
+            <div class="login-inputs">
+                <input type="text" placeholder="请输入用户名" ng-model="name" />
+                <input type="password" placeholder="请输入密码" id="pwd" ng-model="pwd" />
+            </div>
+            <div class="out-login">
+                    <span>
+                        <input type="radio" name="prostatus" value="1" ng-model="loginType" id="r1">
+                        <label for="r1">安全教室</label>
+                    </span>
+                    <span>
+                        <input type="radio" name="prostatus" value="2" ng-model="loginType" id="r2">
+                        <label for="r2">教师</label>
+                    </span>
+            </div>
+            <div class="login-btn"><a ng-click="login();">登 录</a></div>
+            <a style="float: right;margin-top: 3px;margin-right: 9px;" target="_blank" href="/Module/login/forget.html">找回密码</a>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div class="login-footer">
+    <p><span>网站备案:京ICP备12007931号-5</span><span>京公安网备 110105012777</span><span>版权所有©2015</span></p>
+    <p><span>北京森霖木教育科技股份有限公司官网</span><span>技术支持: 大唐互联网+</span></p>
+</div>

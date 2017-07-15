@@ -1,0 +1,391 @@
+/**
+ * Created by mac on 16/6/6.
+ */
+
+angular.module('app').factory("enume",function($http,$state,$rootScope){
+
+    var enumHelp = function(){
+
+        var that = this;
+
+        this.templateType = [{name:"全部",code:""}];          //模板分类
+        this.templateCate = [{name:"--请选择--",code:""}];          //模板类型
+        this.templateCateV2 = [{name:"全部",code:""}];          //模板类型
+
+        this.templateTypeForAdd = [];          //模板分类
+        this.templateCateForAdd = [];          //模板类型
+
+        this.userSex = [{name:"请选择",code:""}];                                  //性别
+        this.idType = [{name:"请选择",code:""}];                                   //证件类型
+        this.maritalStatus = [{name:"请选择",code:""}];                            //婚姻状态
+        this.macao = [{name:"请选择",code:""}];                                    //港澳台外
+
+        this.kcxl = [{name:"全部",code:""}];                  //课程系列
+
+        this.kcxlSafe = [{name:"全部",code:""}];              //授课记录里面的课程系列
+
+        this.xx = [{name:"全部",code:""}];                    //安全教室学校
+        this.xxAdmin = [{name:"全部",code:""}];               //教育机构学校
+
+        this.provinces = [{name:"请选择",code:""}];            //省
+
+        this.uRylxs = [{name:"全部",code:""}];                //人员类型
+        this.uGws = [{name:"全部",code:""}];                  //岗位
+
+        this.classList = [{name:"全部",code:"",bh:""}];
+        this.jsVersion = [{ name: "全部", code: "" }];             //教室版本号
+        this.wxStatus = [{ name: "全部", code: -1 }, { name: "已发布", code: 1 }, { name: "未发布", code: 0 }];             //状态     
+        this.wxQuestionType = [{ name: "单选", code: 0 }, { name: "多选", code: 1 }];
+        this.wxQuestionResType = [{ name: "文本", code: 0 }, { name: "图片", code: 1 }, { name: "音频", code: 2 }, { name: "视频", code: 3 }];             //问题资源类型
+
+        this.NIANJI = [{name:"全部",code:""}];
+
+        this.getData = function(url,cb){
+            $http.get(url).success(function(d){
+                if(d.status.code == "1"){
+                    if(cb){
+                        if(d.data){
+                            cb(d.data);
+                        }
+                    }
+                }
+                else{
+                    if(d.status.code == "3"){
+                        if($rootScope.userFlag == "userSafe"){
+                            $state.go("loginSafe");
+                        }else{
+                            $state.go("loginAdmin");
+                        }
+                    } else{
+                        alert(d.status.message);
+                    }
+                }
+                //else{
+                //    alert(d.status.message);
+                //}
+            })
+        }
+
+        this.postData = function(url,data,cb){
+            $http({
+                method:"POST",
+                url:url,
+                data:data
+            }).success(function(d){
+                if(d.status.code == "1"){
+                    cb(d.data);
+                }
+                else{
+                    if(d.status.code == "3"){
+                        if($rootScope.userFlag == "userSafe"){
+                            $state.go("loginSafe");
+                        }else{
+                            $state.go("loginAdmin");
+                        }
+                    } else{
+                        alert(d.status.message);
+                    }
+                }
+                //else{
+                //    alert(d.status.message);
+                //}
+            })
+        }
+
+        //模板分类
+        this.getTemplateType = function(){
+            if(this.templateType.length <=1 ){
+                this.getData("/cmsapi/template/queryModelTypes",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.templateType.push({name: tmp[i].name,code: tmp[i].code});
+                        that.templateTypeForAdd.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //模板类型
+        this.getTemplateCate = function(){
+            if(this.templateCate.length <= 1){
+                this.getData("/cmsapi/template/queryModelCategorys",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.templateCate.push({name: tmp[i].name,code: tmp[i].code});
+                        that.templateCateForAdd.push({name: tmp[i].name,code: tmp[i].code});
+                        that.templateCateV2.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //性别
+        this.getUserSex = function(){
+            if(this.userSex.length <= 1){
+                this.getData("/cmsapi/user/querySex",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.userSex.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //证件类型
+        this.getIdType = function(){
+            if(this.idType.length <= 1){
+                this.getData("/cmsapi/user/queryIdTypes",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.idType.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //婚姻状态
+        this.getMaritalStatus = function(){
+            if(this.maritalStatus.length <= 1){
+                this.getData("/cmsapi/user/queryMarry",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.maritalStatus.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //港澳台外
+        this.getMacao = function(){
+            if(this.macao.length <= 1){
+                this.getData("/cmsapi/user/queryMacao",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.macao.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //课程系列
+        this.getKcxl  = function(){
+            if(this.kcxl.length <= 1){
+                this.getData("/cmsapi/course/xilie",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.kcxl.push({name: tmp[i].kcxlmc,code: tmp[i].kcxlbh});
+                    }
+                })
+            }
+        }
+
+        //学校
+        this.getXx = function(){
+            if(this.xx.length <= 1){
+                this.getData("/cmsapi/tclass/xx",function(tmp){
+                    if(!tmp.datas){
+                        return;
+                    }
+                    tmp = tmp.datas;
+                    for(var i=0;i<tmp.length;i++){
+                        that.xx.push({name: tmp[i].xxmc,code: tmp[i].xxbh});
+                    }
+                })
+            }
+        }
+        //教育机构学校
+        this.getXxAdmin = function(){
+            if(this.xxAdmin.length <= 1){
+                this.getData("/cmsapi/tclassRegister/xx",function(tmp){
+                    if(!tmp.datas){
+                        return;
+                    }
+                    tmp = tmp.datas;
+                    for(var i=0;i<tmp.length;i++){
+                        that.xxAdmin.push({name: tmp[i].xxmc,code: tmp[i].xxbh});
+                    }
+                })
+            }
+        }
+
+        //学年
+        this.getXnByXx = function(xxbh,cb){
+            this.getData("/cmsapi/tclass/xn?xxbh="+xxbh,function(tmp){
+                cb(tmp);
+            })
+        }
+
+        //年级
+        this.getNjByXn = function(xxbh,xn,cb){
+            this.getData("/cmsapi/tclass/nj?xxbh="+xxbh+"&xn="+xn,function(tmp){
+                cb(tmp);
+            })
+        }
+
+        //班级
+        this.getBjByXnAndNjBh = function(xxbh,xn,njbh,cb){
+            this.getData("/cmsapi/tclass/bj?xxbh="+xxbh+"&xn="+xn+"&njbh="+njbh,function(tmp){
+                cb(tmp);
+            })
+        }
+
+        //授课记录课程系列
+        this.getCurrentKcxl = function(){
+            if(this.kcxlSafe.length <=1){
+                this.getData("/cmsapi/course/currentAuthXilie?pageIndex=1&pageSize=100",function(d){
+                    if(!d.datas){
+                        return;
+                    }
+                    d = d.datas;
+                    for(var i=0;i< d.length;i++){
+                        that.kcxlSafe.push({name:d[i].kcxlmc,code:d[i].kcxlbh});
+                    }
+                })
+            }
+        }
+
+        //获取当前租户下的课程
+        this.getCurrentKeCheng = function(kcxlbh,cb){
+            this.getData("/cmsapi/course/currentAuthKeCheng?xlbh="+kcxlbh+"&pageIndex=1&pageSize=100",function(d){
+                cb(d);
+            })
+        }
+
+
+        //获取省
+        this.getProvinces = function(){
+            if(this.provinces.length <= 1){
+                this.getData("/cmsapi/user/queryProvinces",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.provinces.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //获取人员类型
+        this.getuRylxs = function(){
+            if(this.uRylxs.length <= 1){
+                this.getData("/cmsapi/dictionary/queryByParentCode?parentCode=user_type",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.uRylxs.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //获取岗位
+        this.getuGws = function(){
+            if(this.uGws.length <= 1){
+                this.getData("/cmsapi/dictionary/queryByParentCode?parentCode=position",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.uGws.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //获取所有教室
+        this.getClassList = function(){
+            if(this.classList.length <= 1){
+                this.getData("/cmsapi/tclassRegister/query?pageIndex=1&pageSize=10000",function(tmp){
+                    if(!tmp.datas){
+                        return;
+                    }
+                    tmp = tmp.datas;
+                    for(var i=0;i<tmp.length;i++){
+                        that.classList.push({name: tmp[i].jsmc,code: tmp[i].tanentid,bh:tmp[i].jsbh});
+                    }
+                })
+            }
+        }
+
+        //获取教室版本号
+        this.getJsVersion = function(){
+            if(this.jsVersion.length <= 1){
+                this.getData("/cmsapi/dictionary/queryByParentCode?parentCode=jsVersion",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.jsVersion.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        //时间转换
+        this.getCDate = function(date){
+            if(date == ""){
+                return "";
+            }
+            return new Date(date).format();
+        }
+
+        //时间转换
+        this.getCDateTime = function(date){
+            if(date == ""){
+                return "";
+            }
+            return new Date(date).formatTime();
+        }
+
+        //获取所有年级
+        this.getNianJi = function(){
+            if(this.NIANJI.length <= 1){
+                this.getData("/cmsapi/dictionary/queryByParentCode?parentCode=NIANJI",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    for(var i=0;i<tmp.length;i++){
+                        that.NIANJI.push({name: tmp[i].name,code: tmp[i].code});
+                    }
+                })
+            }
+        }
+
+        this.init = function(){
+            console.log("初始化枚举服务!");
+            this.getTemplateCate();
+            this.getTemplateType();
+            this.getUserSex();
+            this.getIdType();
+            this.getMaritalStatus();
+            this.getMacao();
+            this.getKcxl();
+            this.getXx();
+            this.getProvinces();
+            this.getuRylxs();
+            this.getuGws();
+            this.getClassList();
+            this.getCurrentKcxl();
+            this.getJsVersion();
+            this.getNianJi();
+        }
+    }
+
+    return new enumHelp();
+})

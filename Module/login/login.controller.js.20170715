@@ -30,7 +30,6 @@ angular.module('app')
                 $rootScope.userName = d.xxmc;
                 if(d.loginType == "teacher"){
                     $rootScope.menuCtrl = false;
-                    $rootScope.userName = d.name;
                 }else{
                     $rootScope.menuCtrl = true;
                 }

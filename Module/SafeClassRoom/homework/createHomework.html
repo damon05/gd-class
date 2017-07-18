@@ -1,9 +1,9 @@
-<div class="navigation">我的应用 > 作业管理 > {{t_title}}</div>
+<div class="navigation">我的应用 >考卷管理 > {{t_title}}</div>
 
 <div class="tabList" >
     <ul>
-        <li ng-class="{ 'tabList_hover' : data.current == 1 }" ng-click="actions.setCurrent(1)">作业基本信息</li>
-        <li ng-class="{ 'tabList_hover' : data.current == 2 }" ng-click="actions.setCurrent(2)">作业完成信息</li>     
+        <li ng-class="{ 'tabList_hover' : data.current == 1 }" ng-click="actions.setCurrent(1)">考卷基本信息</li>
+        <li ng-class="{ 'tabList_hover' : data.current == 2 }" ng-click="actions.setCurrent(2)">考卷完成信息</li>     
     </ul>
 </div>
 <div class="clearfix" style="min-height:300px;" ng-show="data.current == 1">
@@ -12,59 +12,36 @@
             <table width="70%" style="margin:5px auto;">                
                 <tbody style="text-align:left">
                     <tr><td style="width:120px;" align="center"><img src="resource/images/u4.png" /></td><td align="center"  style="width:120px;"><img src="resource/images/u7_line.png" /></td><td style="width:60px;" align="center"><img src="resource/images/u7.png" /></td></tr>
-                    <tr><td style="width:120px;" align="center">维护作业基本信息</td><td></td><td style="width:120px;" align="center">维护作业内容信息</td></tr>
+                    <tr><td style="width:120px;" align="center">维护考卷基本信息</td><td></td><td style="width:120px;" align="center">维护考卷内容信息</td></tr>
                 </tbody>
             </table>
         </div>
-        <div style="margin-top:20px;font-size:18px;font-weight:bold;">作业基本信息</div>
+        <div style="margin-top:20px;font-size:18px;font-weight:bold;">考卷基本信息</div>
         <div class="searchRow clearfix">
             <div class="left">
-                <label >作业编码：{{ID}}</label> 
+                <label >考卷编码：{{ID}}</label> 
+            </div>
+        </div>
+        <div class="searchRow clearfix" ng-show="homeworkType==0">
+            <div class="left">
+                <label>课程编码：{{KCBH}}</label>
             </div>
         </div>
         <div class="searchRow clearfix">
             <div class="left">
-                <label ng-show="homeworkType==0">课程编码：{{KCBH}}</label> <label ng-show="homeworkType==1">授课记录编码：{{teachingCode}}</label>              
-            </div>
-        </div>
-        <div class="searchRow clearfix">
-            <div class="left">
-                <label>作业标题：</label>
+                <label>考卷标题：</label>
                 <input type="text" maxlength="200" class="width200" ng-model="Title" />
             </div>
-        </div>
-        <div class="searchRow clearfix">
-
-            <div class="left mr15">
-                <label>完成时间：</label>
-                <input type="date" maxlength="15" class="width200" ng-model="FinishTime" />
-            </div>
-        </div>
-        <div class="searchRow clearfix" style="min-height:100px;">
-            <div class="left">
-                <label>学豆赠送信息：</label>
-                <table width="300" style="margin-top:5px;">
-                    <thead style="text-align:left">
-                        <tr><th>答对百分比（%）</th><th>赠送学豆数</th></tr>
-                    </thead>
-                    <tbody style="text-align:left">
-                        <tr ng-repeat="item in wxHomeworkScoreRule">
-                            <td>{{item.ScoreBegin}}~{{item.ScoreEnd}}</td>
-                            <td>{{item.StudyBean}}</td>
-                        </tr>  
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </div>      
     </div>    
     <question-list ng-show="showQuestion" show-ck="{show:false}" show-add-btn="showButton" from="{val:'safe'}"></question-list>
     <div  style="margin-top:60px;text-align:center;">
         <div class="mt10 clearfix" style="min-height:20px;height:20px;" ng-show="!showQuestion">
-            <button class="btnGreen" ng-show="showButton" ng-click="createHomework();">保存提交</button><button class="btnGreen" style="margin-left:10px;width:150px;" ng-click="gotoStepTwo();">下一步(维护作业内容)</button>
+            <button class="btnGreen" ng-show="showButton" ng-click="createHomework();">保存提交</button><button class="btnGreen" style="margin-left:10px;width:150px;" ng-click="gotoStepTwo();">下一步(维护考卷内容)</button>
         </div>
 
         <div class="mt10 clearfix" style="min-height:20px;height:20px;" ng-show="showQuestion">
-            <button class="btnGreen" style="width:150px;" ng-show="showButton" ng-click="gotoStepOne();">上一步(作业基本信息)</button><button class="btnGreen" style="margin-left:10px;width:150px;" ng-click="backToHomeworkList();">完成(作业布置完成)</button>
+            <button class="btnGreen" style="width:150px;"  ng-click="gotoStepOne();">上一步(考卷基本信息)</button><button class="btnGreen" style="margin-left:10px;width:150px;" ng-click="backToHomeworkList();">完成(考卷布置完成)</button>
         </div>
     </div>
 

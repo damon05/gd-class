@@ -5,7 +5,7 @@
 
 angular.module("app").directive("homeworkList",function(){
     return {
-        templateUrl: "./Directive/homeworkList/homeworkList.html?v=1925",
+        templateUrl: "./Directive/homeworkList/homeworkList.html?v=1403",
         restrict:"EA",
         scope:{
             "chooseCallback":"=",
@@ -29,7 +29,7 @@ angular.module("app").directive("homeworkList",function(){
 
             if ($scope.Type == "0")
             {
-                $scope.TypeName = "作业";
+                $scope.TypeName = "考卷";
             }
             else {
                 $scope.TypeName = "问卷调查";
@@ -40,12 +40,12 @@ angular.module("app").directive("homeworkList",function(){
             }
 
             $scope.createHomework = function(){                
-                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", from: "safe", teachingCode: "20161101205908881NAN2", schoolID: "BJ1001", homeworkType: 1 } });
+                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", from: "safe", teachingCode: "", schoolID: "nlsex", homeworkType: 1 } });
                
             }
 
             $scope.createHomeworkTemplate = function () {
-                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", homeworkType: 0, KCBH: "KC1009" } });
+                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", homeworkType: 0, KCBH: "zn100009" } });
                 
             }
 
@@ -65,7 +65,7 @@ angular.module("app").directive("homeworkList",function(){
             }
 
             $scope.publish = function (item) {
-                var alertMessage = "发布后不能再修改作业内容，确定要发布吗？";
+                var alertMessage = "发布后不能再修改考卷内容，确定要发布吗？";
                 if ($scope.Type == "1") {
                     alertMessage = "发布后不能再修改调查问卷内容，确定要发布吗？";
                 }
@@ -81,6 +81,25 @@ angular.module("app").directive("homeworkList",function(){
                     enume.postData(url, tmp, function (d) {                       
                             alert("发布成功!");
                             $scope.$broadcast("searchByFilter");                        
+                    })
+                }
+            };
+
+            $scope.closeHomework = function (item) {
+                var alertMessage = "确定要关闭考卷吗？";
+
+                if (confirm(alertMessage)) {
+                    var tmp = {
+                    };
+                    var url = "";
+
+                    var id = item.ID;
+                    url = srvDomain + "/Homework/CloseHomework";
+                    tmp.id = id;
+
+                    enume.postData(url, tmp, function (d) {
+                        alert("关闭考卷成功!");
+                        $scope.$broadcast("searchByFilter");
                     })
                 }
             };
@@ -104,7 +123,7 @@ angular.module("app").directive("homeworkList",function(){
 
             $scope.copyItem = function (item) {
                 $scope.tag = "copy";
-                $scope.popTitle = "复制作业";
+                $scope.popTitle = "复制考卷";
                 $scope.selectedItem = item;
                 $scope.selectedItem.newTeachingCode = "";
                 ngDialog.open({

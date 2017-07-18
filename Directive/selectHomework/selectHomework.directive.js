@@ -5,7 +5,7 @@
 
 angular.module("app").directive("selectHomework", function () {
     return {
-        templateUrl: "./Directive/selectHomework/selectHomework.html?v=1931",
+        templateUrl: "./Directive/selectHomework/selectHomework.html?v=1401",
         restrict:"EA",
         scope:{
             "chooseCallback":"=",

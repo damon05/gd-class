@@ -2,8 +2,13 @@
 
 <div class="searchRow clearfix">
     <div class="left mr15">
-        <label>会员账号：</label>
-        <input type="text" placeholder="会员账号" class="width150" ng-model="OpenID" />
+        <label>身份证号：</label>
+        <input type="text" placeholder="身份证号" class="width150" ng-model="studentNo" />
+
+    </div>
+    <div class="left mr15">
+        <label>考试日期：</label>
+        <input type="date" placeholder="考试日期" class="width150" ng-model="studyDate" />
 
     </div>
     <div class="left">
@@ -16,8 +21,10 @@
 
 <table class="tableBox" border="1">
     <thead>
-    <tr>        
-        <th>会员账号</th>
+    <tr> 
+        <th>考试日期</th>       
+        <th>身份证号</th>
+        <th>姓名</th>
         <th>分数</th>
         <th>正确数</th>
         <th>错误数</th>
@@ -30,10 +37,12 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="item in List">        
-        <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.OpenID}}</td>
+    <tr ng-repeat="item in List"> 
+        <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.SignDate}}</td>       
+        <td style="word-wrap: break-word; word-break: break-all;" width="15%">{{item.StudentNo}}</td>
+        <td style="word-wrap: break-word; word-break: break-all;" width="5%">{{item.StudentName}}</td>
         <td style="word-wrap:break-word;" width="3%">{{item.Score}}</td>
-        <td style="word-wrap:break-word;" width="3%">{{item.TotalCount-item.WrongCount}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.CorrectCount}}</td>
         <td style="word-wrap:break-word;" width="3%">{{item.WrongCount}}</td>
         <td style="word-wrap:break-word;" width="3%">{{item.CorrectRate}}%</td>
         <td style="word-wrap:break-word;" width="6%">{{item.StartTime}}</td>
@@ -65,7 +74,7 @@
                         <th>题目</th>
                         <th>答案类型</th>
                         <th>正确答案</th>
-                        <th>会员答案</th>
+                        <th>考生答案</th>
                     </tr>
                 </thead>
 

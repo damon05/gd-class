@@ -1,7 +1,7 @@
 <div class="searchRow clearfix">
     <div class="left mr15">
-        <label>作业标题：</label>
-        <input type="text" placeholder="作业标题" class="width150" ng-model="Title" />
+        <label>考卷标题：</label>
+        <input type="text" placeholder="考卷标题" class="width150" ng-model="Title" />
 
     </div>
     <div class="left mr15" ng-show="Type==0">
@@ -16,13 +16,15 @@
     </div>
 
     <div class="left mr15">
-        <label>作业类型：</label>
+        <label>考卷类型：</label>
         <select class="width140" ng-model="homeworkType" ng-options="m.code as m.name for m in wxHomeworkType"></select>
     </div>
 </div>
 
 <div class="mt10">
     <button class="btnGreen ml65" ng-click="search();">查询</button>
+    <button  class="btnGreen" ng-click="createHomework();">创建考卷</button>
+    <button class="btnGreen" ng-click="createHomeworkTemplate();">创建考卷模板</button>
 </div>
 
 <div class="grayLine"></div>
@@ -35,18 +37,14 @@
 <table class="tableBox" border="1">
     <thead>
     <tr> 
-        <th>作业编码</th>  
-        <th>作业类型</th>     
-        <th>作业标题</th>
-        <th>课程标题</th>
-        <th>授课编号</th>
-        <th>学校</th>
+        <th>考卷编码</th>  
+        <th>考卷类型</th>     
+        <th>考卷标题</th>
+        <th>课程标题</th>        
+        <th>工地</th>
         <th>状态</th>
         <th>发布时间</th>
-        <th>完成时间</th>
         <th>修改时间</th>
-        <th>完成人数</th>
-        <th>总人数</th>
         <th>操作</th>
     </tr>
     </thead>
@@ -55,23 +53,21 @@
     <tr ng-repeat="item in List">
         <td style="word-wrap:break-word;" width="6%">{{item.ID}}</td>
         <td style="word-wrap:break-word;" width="6%" ng-if="item.HomeworkType==0">基础模板</td>
-        <td style="word-wrap:break-word;" width="6%" ng-if="item.HomeworkType==1">普通作业</td>
+        <td style="word-wrap:break-word;" width="6%" ng-if="item.HomeworkType==1">普通考卷</td>
         <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.Title}}</td>
-        <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.CourseTitle}}</td>
-        <td style="word-wrap: break-word; word-break: break-all;" width="6%">{{item.TeachingCode}}</td>
+        <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.CourseTitle}}</td>   
         <td style="word-wrap: break-word; word-break: break-all;" width="10%">{{item.SchoolName}}</td>
-        <td style="word-wrap:break-word;" width="5%">{{item.StatusName}}</td>
+        <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==0">未发布</td>
+        <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==1">已发布</td>
+        <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==2">已关闭</td>
         <td style="word-wrap:break-word;" width="5%">{{item.PublishTime}}</td>
-        <td style="word-wrap:break-word;" width="5%">{{item.FinishTime}}</td>
         <td style="word-wrap:break-word;" width="5%">{{item.ModifyTime}}</td>
-        <td style="word-wrap:break-word;" width="6%" >{{item.CompleteAmount}}</td>
-        <td style="word-wrap:break-word;" width="6%" >{{item.StudentAmount}}</td>
         <td width="10%">
             <button ng-click="publish(item);" ng-show="item.Status==0&&item.HomeworkType==1" style="width:30px;">发布</button>
             <button ng-click="edit(item);" ng-show="item.Status==0" style="width:30px;">修改</button>
             <button ng-click="delete(item);" ng-show="item.Status==0" style="width:30px;">删除</button>
-            <button ng-click="detail(item);" ng-show="item.Status==1" style="width:30px;">详情</button>
-            <!--<button ng-click="copyItem(item);" ng-show="Type==0" style="width:30px;" >复制</button>-->
+            <button ng-click="detail(item);" ng-show="item.Status==1||item.Status==2" style="width:30px;">详情</button>
+            <button ng-click="closeHomework(item);" ng-show="item.Status==1&&item.HomeworkType==1" style="width:30px;">关闭</button>  
         </td>
     </tr>
     </tbody>

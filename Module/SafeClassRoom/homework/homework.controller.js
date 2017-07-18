@@ -14,7 +14,7 @@ angular.module('app')
         $scope.wxHomeworkScoreRule = enume.wxHomeworkScoreRule;
 
         $scope.data = {
-            current: "1" // 1代表作业基本信息，2代表作业完成信息
+            current: "1" // 1代表考卷基本信息，2代表考卷完成信息
         };
 
         $scope.actions =
@@ -46,29 +46,29 @@ angular.module('app')
 
         $scope.showButton = true;
         if ($stateParams.entity.tag == "edit") {
-            $scope.t_title = "修改作业";
+            $scope.t_title = "修改考卷";
             getInfoByCode();
             $scope.showButton = true;
         }
         else if ($stateParams.entity.tag == "detail") {
-            $scope.t_title =  "作业详情";
+            $scope.t_title =  "考卷详情";
             getInfoByCode();
             $scope.showButton = false;           
         }
         else if ($stateParams.entity.tag == "addQuestion") {
-            $scope.t_title = "修改作业";
+            $scope.t_title = "修改考卷";
             getInfoByCode();
             $scope.showButton = true;
             $scope.showQuestion = true;
         }
         else if ($stateParams.entity.tag == "detailQuestion") {
-            $scope.t_title = "修改作业";
+            $scope.t_title = "修改考卷";
             getInfoByCode();
             $scope.showButton = false;
             $scope.showQuestion = true;
         }
         else {
-            $scope.t_title = "添加作业";
+            $scope.t_title = "添加考卷";
             $scope.showButton = true;
         }
 
@@ -76,7 +76,7 @@ angular.module('app')
             // $state.go("safeRoom.homeworkCreate", { entity: { tag: "edit", homeworkID: item.ID, Type: $scope.Type } });
             if ($scope.ID == "")
             {
-                alert("请先保存作业基本信息！");
+                alert("请先保存考卷基本信息！");
             }
             else {
                 $scope.showQuestion = true;
@@ -99,7 +99,7 @@ angular.module('app')
                 SchoolID: $scope.SchoolID,
                 TeachingCode:$scope.teachingCode,
                 Title: $scope.Title,
-                Type:0,//作业0 调查问卷1
+                Type:0,//考卷0 调查问卷1
                 HomeworkType: $scope.homeworkType,
                 CourseCode: $scope.KCBH,
                 FinishTime: $scope.FinishTime,

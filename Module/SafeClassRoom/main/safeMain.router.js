@@ -146,4 +146,23 @@ angular.module('app').config(function($stateProvider){
             templateUrl: './Module/SafeClassRoom/homework/homeworkList.html?v=1298',
             controller: 'homeworkListCtrl'
         })
+        //工地管理
+        .state('safeRoom.train', {
+            url: '/train',
+            params:{entity:null},
+            templateUrl: "/Module/SafeClassRoom/train/list.html",
+            controller: 'trainCtrl'
+        })
+        .state('safeRoom.report', {
+            url: '/report',
+            params:{entity:null},
+            templateUrl: "/Module/SafeClassRoom/report/list.html",
+            controller: 'reportCtrl'
+        })
+        .state('safeRoom.score', {
+            url: '/score',
+            params:{entity:null},
+            templateUrl: "/Module/SafeClassRoom/score/list.html",
+            controller: 'scoreCtrl'
+        })
 });

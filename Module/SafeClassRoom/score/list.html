@@ -1,0 +1,84 @@
+<div class="navigation">我的应用 > 老师评分</div>
+
+<div class="searchRow clearfix">
+    <div class="left mr15">
+        <label>选择考卷：</label>
+        <select ng-options="m.code as m.name for m in homeWorks" class="width287" ng-model="homeworkId"></select>
+    </div>
+    <div class="left mr15">
+        <label>身份证：</label>
+        <input type="text" ng-model="cardNo" class="width287" />
+    </div>
+
+    <div class="left">
+        <label>考试日期：</label>
+        <input type="date" class="width150" ng-model="beginTime"/>
+        <span>---- </span>
+        <input type="date" class="width150" ng-model="endTime"/>
+    </div>
+</div>
+
+<div class="mt10">
+    <button class="btnGreen ml65" ng-click="search();">查询</button>
+    <button class="btnGreen ml65" ng-click="export();">导出</button>
+</div>
+
+<table-kill load-data="load" get-url="getUrl" map="map" actions="actions" analysis="analysis" paging-option="pOption"></table-kill>
+
+<div class="grayLine"></div>
+
+<div ng-show="addEditModal">
+    <div class="black" style="width: 100%; height: 100%;background-color: #000!important; position: absolute;left: 0;top: 0;opacity: 0.5;"></div>
+    <div class="modal" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" style="width: 48px;height: 32px;" data-dismiss="modal" ng-click="close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title">老师评分</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal tableForm" role="form" >
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">编号:</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control input-sm" ng-model="bh" readonly>
+                            </div>
+                            <label class="col-sm-3 control-label">姓名:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" ng-model="xm" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">考试分数:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control input-sm" ng-model="fs" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label"></label>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>选项</th>
+                                    <th>分数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in list track by $index">
+                                        <td>{{item.name}}</td>
+                                        <td><select ng-options="m.code as m.name for m in selectData" class="width287" ng-model="item.score"></select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"  style="width: 54px;height: 32px;" data-dismiss="modal" ng-click="close()">关闭</button>
+                    <button type="button" class="btn btn-default"  style="width: 54px;height: 32px;" data-dismiss="modal" ng-click="save()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

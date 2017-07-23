@@ -1,6 +1,6 @@
 var srvDomain = "/netcmsapi";
 var app = angular.module("app",[
-    'ui.router', 'ngDialog'
+    'ui.router', 'ngDialog','tableKillModule'
 ])
     .config(function($stateProvider,$urlRouterProvider,$locationProvider,$httpProvider){
         $urlRouterProvider.otherwise('/loginSafe');

@@ -1,0 +1,43 @@
+<style>
+    .table_kill .btn{margin:0 5px;}
+    .table_kill .input{border-radius: 4px;border:1px solid #ddd;text-align: center;margin:0 4px;width:34px;}
+</style>
+
+<div class="table_kill mt10">
+    <table class="table table-bordered" ng-show="readyRenderData">
+        <thead>
+            <tr>
+                <th ng-show="showCk"><input ng-model="allCkStatus" type="checkbox" ng-click="selectAll();" /></th>
+                <th ng-show="showActionButton" class="text-center">操作</th>
+                <th ng-repeat="x in cols track by $index" class="text-center">{{x.val}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-click="selectOne(item,items);" ng-repeat="item in items track by $index" repeat-finish-cb="renderCb">
+                <td ng-show="showCk" style="position: relative;"><div class="maskLayer"></div><input type="checkbox" ng-model="item.ck"  /></td>
+                <td ng-show="showActionButton" class="text-center">
+                    <a tag="{{s.permission}}" ng-repeat="s in actionsForList track by $index" ng-click="s['action'](item,items)" class="btn btn-default btn-xs">{{s.val}}</a>
+                </td>
+                <td ng-repeat="s in cols track by $index" class="text-center">
+                    <l ng-switch="s.action.key">
+                        <div ng-switch-when="exist">
+                            <a title="{{item[s.key]}}" ng-click="s['action']['operation'](item,items);">{{item[s.key]}}</a>
+                        </div>
+                        <div ng-switch-when="convert">
+                            <o id={{$id}} title="{{item[s.key]}}" ng-click="s['action']['operation'](item,items);">{{s['action']['convert'](item,this)}}</o>
+                        </div>
+                        <div title="{{item[s.key]}}" ng-switch-default>
+                            {{item[s.key]}}
+                        </div>
+                    </l>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagingContainer clearfix">
+        <paging-module callback-fn="cbForPaging" get-url="getUrlForPaging" do-load="loadData" analysis="analysisData" paging-option="pagingOptionData"></paging-module>
+    </div>
+
+</div>

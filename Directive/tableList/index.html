@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="../../../resource/js/angular.js"></script>
+    <script src="tableKiller.directive.js"></script>
+    <script src="../../../resource/js/jquery-2.1.0.js"></script>
+    <script src="../../../resource/core.js"></script>
+</head>
+<body ng-app="myApp">
+
+
+    <div ng-controller="ctl">
+
+        编号:<input type="text" ng-model="name" />
+        <button ng-click="search();">查询</button>
+
+        <table-kill load-data="search01" show-ck="true" select-ck-cb="getSelectedItems" get-url="getUrl" map="map" actions="actions" analysis="analysis" paging-option="pagingOpton"></table-kill>
+    </div>
+
+</body>
+</html>
+<script>
+    var app = angular.module("myApp");
+
+    app.controller("ctl",function($scope,$compile){
+
+        $scope.name = "3";
+
+        function click(item){
+            alert(item.id);
+        }
+
+        function change(item,elId){
+            $("#"+elId.$id).html("<span style='color:red;'>"+item.userid.val+"</span>");
+        }
+
+        $scope.map = [
+            {key:"activitiebegindate",val:"开始时间",show:true},
+            {key:"activitiedescptions",val:"描述",show:true},
+            {key:"activitiename",val:"名称",show:true,action:{key:"exist",operation:detail}},
+            {key:"sharemessage",val:"分享语",show:true},
+            {key:"activitieenddate",val:"结束时间",show:true},
+            {key:"sharepicurl",val:"分享图片",show:false},
+            {key:"activitieclassid",val:"主键",show:false},
+            {key:"id",val:"id",show:true},
+            {key:"email",val:"email",show:true,action:{key:"exist",operation:detail}},
+            {key:"userid",val:"userid",show:true,action:{key:"convert",convert:change,operation:detail}}
+        ];
+
+        $scope.pagingOpton={
+            size:10,
+            index:1,
+            SizeKey:"pagesize",
+            IndexKey:"pagenum"
+        };
+
+        $scope.analysis = function(data){
+            var tmp = {data:[],totalCount:0,totalPage:-1};
+            tmp.data = data.data.users;
+            tmp.totalCount = data.data.totalCount;
+            return tmp;
+        }
+
+        $scope.getSelectedItems = function(items){
+            debugger
+        }
+
+        $scope.getUrl = function(){
+            return "data.json";
+        }
+
+        $scope.search = function(){
+            //$scope.$broadcast("doSearch");
+            debugger
+            $scope.search01();
+        }
+
+        function detail(item){
+            alert("action detail" + item.id);
+        }
+        function price(item){
+            alert("price "+ item.id);
+        }
+
+        $scope.renderCb = function(){
+            console.log("列表渲染完毕后执行的callback!");
+        }
+
+        $scope.detail = function(item){
+            alert("action detail" + item.id);
+        }
+
+        $scope.actionOne = function(item){
+            alert("action one " + item.id);
+        }
+
+        $scope.actionTwo = function(item){
+            alert("action two " + item.id);
+        }
+
+        $scope.actionThree = function(item){
+            alert("action three " + item.id);
+        }
+        $scope.actions = [
+            {key:"edit",val:"修改",action:$scope.actionOne},
+            {key:"detail",val:"详情",action:$scope.actionTwo},
+            {key:"delete",val:"删除",action:$scope.actionThree},
+            {key:"other",val:"other",action:$scope.actionThree}
+        ];
+    })
+</script>

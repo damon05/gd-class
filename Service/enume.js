@@ -42,6 +42,8 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
         this.homeworkType = [{ name: "全部", code: -1 }, { name: "基础模板", code: 0 }, { name: "普通考卷", code: 1 }];
         this.wxHomeworkScoreRule = [];
 
+        this.homeWorks = [{name:"请选择",code:"0"}];
+
         this.getData = function(url,cb){
             $http.get(url).success(function(d){
                 if(d.status.code == "1"){
@@ -92,6 +94,21 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
                 //    alert(d.status.message);
                 //}
             })
+        }
+
+        this.getHomeWorks = function(){
+            var that = this;
+            if(this.homeWorks.length <=1 ){
+                this.getData("/cmsapi/gd/homeworks?page=1&pageSize=999",function(tmp){
+                    if(!tmp){
+                        return;
+                    }
+                    tmp = tmp.datas;
+                    for(var i=0;i<tmp.length;i++){
+                        that.homeWorks.push({name: tmp[i].title,code: tmp[i].id});
+                    }
+                })
+            }
         }
 
         //模板分类
@@ -423,7 +440,7 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
             this.getNianJi();
             this.getwxSchoolList();
             this.getwxHomeworkScoreRuleList();
-
+            this.getHomeWorks();
         }
     }
 

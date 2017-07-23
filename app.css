@@ -1029,7 +1029,7 @@ input,button{
 .login-header img{display:block; margin: 28px 0 0 54px;}
 .login-wrap{width: 100%; background-color: #574a66;font-family: "微软雅黑"}
 .login-banner{width: 1200px; height: 506px; margin: 0 auto; background: url("./resource/images/login-banner.jpg") no-repeat 6px bottom; overflow: hidden;}
-.login-main{width: 262px; height: 345px; padding: 0 42px; float: right; margin-right: 94px; background: url("./resource/images/login-bg.png") no-repeat; font-family: "微软雅黑"; overflow: hidden;}
+.login-main{width: 345px; height: 345px; padding: 0 42px; float: right; margin-right: 3px; background: url("./resource/images/login-bg.png") no-repeat; font-family: "微软雅黑"; overflow: hidden;}
 .login-main .login-inputs{width:260px; height: 84px; border: 1px solid #ababab; border-radius: 14px; margin: 52px auto 0; overflow: hidden;}
 .login-main .login-inputs input{display:block; width: 240px; height: 42px; padding-left: 26px; font-size: 14px; font-family: "微软雅黑"; line-height: 42px; margin-left: 20px; border: 0; border-bottom: 1px solid #ababab; background-repeat: no-repeat; background-position: left center; background-size: 20px 26px;}
 .login-main .login-inputs input:first-child{background-image: url("./resource/images/icon-user.jpg");}
@@ -1040,7 +1040,7 @@ input,button{
 .login-main .out-login input{margin: -3px 4px 0 4px; vertical-align: middle;}
 .login-main .login-btn{margin-top: 20px;}
 .login-main .login-btn a{display:block; line-height: 42px; background-color: #009744; color: #fff; text-align: center; border-radius: 14px;}
-.login-footer{height:56px; padding-top: 216px; line-height: 20px; text-align: center; color: #808080;}
+.login-footer{height:56px; padding-top: 30px; line-height: 20px; text-align: center; color: #808080;}
 .login-footer span{padding: 0 6px;}
 
 .editPassword{

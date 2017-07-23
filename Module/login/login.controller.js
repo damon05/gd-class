@@ -22,24 +22,13 @@ angular.module('app')
                 return;
             }
 
-            enume.postData("/cmsapi/login/tanentDoLogin?sqzh="+$scope.name+"&password="+$scope.pwd+"&type="+$scope.loginType,null,function(d){
+            enume.postData("/cmsapi/login/tanentDoLogin?sqzh="+$scope.name+"&password="+$scope.pwd+"&type=1",null,function(d){
                 $scope.error = false;
                 enume.init();
                 $state.go("safeRoom.homeworkList");
 
                 $rootScope.userName = d.xxmc;
-                if(d.loginType == "teacher"){
-                    $rootScope.menuCtrl = false;
-                    $rootScope.userName = d.name;
-                }else{
-                    $rootScope.menuCtrl = true;
-                }
             })
-        }
-
-        $scope.changeLogin = function(){
-            $rootScope.userFlag = "userAdmin";
-            $state.go("loginAdmin");
         }
 
         document.querySelector("#pwd").addEventListener("keyup",function(e){

@@ -76,7 +76,18 @@ angular.module('app')
             for(var i=0;i<$scope.list.length;i++){
                 res.push($scope.list[i].name);
             }
-            enume.postData("/cmsapi/gd/updateHomeworkItems?homeworkId="+selectItem.homeworkId+"&items="+res.join(','),null,function(d){
+            var hid = "";
+            if(!$scope.addTag){
+                if($scope.homeworkId == "0"){
+                    alert("请选择考卷");
+                    return;
+                }
+                hid = $scope.homeworkId;
+            }else{
+                hid = selectItem.homeworkId;
+            }
+
+            enume.postData("/cmsapi/gd/updateHomeworkItems?homeworkId="+hid+"&items="+res.join(','),null,function(d){
                 alert("保存成功!");
                 $scope.load();
                 $scope.addEditModal = false;

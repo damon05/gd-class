@@ -47,26 +47,12 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
         this.getData = function(url,cb){
             $http.get(url).success(function(d){
                 if(d.status.code == "1"){
-                    if(cb){
-                        if(d.data){
-                            cb(d.data);
-                        }
-                    }
+                    cb(d.data);
+                } else if(d.status.code == "3"){
+                    $state.go("loginSafe");
+                } else if(d.status.code == "2") {
+                    alert(d.status.message);
                 }
-                else{
-                    if(d.status.code == "3"){
-                        if($rootScope.userFlag == "userSafe"){
-                            $state.go("loginSafe");
-                        }else{
-                            $state.go("loginAdmin");
-                        }
-                    } else{
-                        alert(d.status.message);
-                    }
-                }
-                //else{
-                //    alert(d.status.message);
-                //}
             })
         }
 
@@ -78,21 +64,11 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
             }).success(function(d){
                 if(d.status.code == "1"){
                     cb(d.data);
+                } else if(d.status.code == "3"){
+                    $state.go("loginSafe");
+                } else if(d.status.code == "2") {
+                    alert(d.status.message);
                 }
-                else{
-                    if(d.status.code == "3"){
-                        if($rootScope.userFlag == "userSafe"){
-                            $state.go("loginSafe");
-                        }else{
-                            $state.go("loginAdmin");
-                        }
-                    } else{
-                        alert(d.status.message);
-                    }
-                }
-                //else{
-                //    alert(d.status.message);
-                //}
             })
         }
 

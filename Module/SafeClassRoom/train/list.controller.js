@@ -76,18 +76,18 @@ angular.module('app')
             for(var i=0;i<$scope.list.length;i++){
                 res.push($scope.list[i].name);
             }
-            var hid = "";
+            var url = "";
             if(!$scope.addTag){
                 if($scope.homeworkId == "0"){
                     alert("请选择考卷");
                     return;
                 }
-                hid = $scope.homeworkId;
+                url = "/cmsapi/gd/addHomeworkItems?homeworkId="+$scope.homeworkId+"&items="+res.join(',')
             }else{
-                hid = selectItem.homeworkId;
+                url = "/cmsapi/gd/updateHomeworkItems?homeworkId="+selectItem.homeworkId+"&items="+res.join(',')
             }
 
-            enume.postData("/cmsapi/gd/updateHomeworkItems?homeworkId="+hid+"&items="+res.join(','),null,function(d){
+            enume.postData(url,null,function(d){
                 alert("保存成功!");
                 $scope.load();
                 $scope.addEditModal = false;
@@ -99,6 +99,10 @@ angular.module('app')
         ];
 
         $scope.addPf = function(){
+            if($scope.homeworkId == "0"){
+                alert("请选择考卷");
+                return;
+            }
             $scope.list = [];
             $scope.addTag = false;
             $scope.addEditModal = true;

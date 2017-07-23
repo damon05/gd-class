@@ -44,11 +44,13 @@
     function getData(){
         $.ajax({
             type:"get",
-            url:"/api/questionnaire/query?cardNo="+_code+"&index="+index+"&size="+size,
+            url:"/api/gd/studentHomeWorkList?cardNo="+_code+"&pageIndex="+index+"&pageSize="+size,
             success:function(d){
                 d = eval("("+d+")");
                 if(d.status.code == "1"){
-                    render(d.data);
+                    if(d.data.datas.length != 0){
+                        render(d.data.datas);
+                    }
                 }else{
                     alert(d.status.message);
                 }

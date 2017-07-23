@@ -5,7 +5,7 @@ angular.module('app')
 
         $scope.homeWorks = enume.homeWorks;
         $scope.homeworkId = "0";
-        $scope.beginDate = "";
+        $scope.beginTime = "";
         $scope.endTime = "";
         $scope.cardNo = "";
         $scope.cols = [
@@ -19,7 +19,7 @@ angular.module('app')
 
         $scope.export = function(){
             var url = "/cmsapi/gd/homeworkWorkersItemReportExport?cardNo="+$scope.cardNo+"&homeworkId="+$scope.homeworkId
-                +"&beginTime="+enume.getCDate($scope.beginDate)+"&endTime="+enume.getCDate($scope.endTime);
+                +"&beginTime="+enume.getCDate($scope.beginTime)+"&endTime="+enume.getCDate($scope.endTime);
             window.open(url);
         }
 
@@ -46,7 +46,7 @@ angular.module('app')
 
         $scope.getUrl = function(){
             return "/cmsapi/gd/homeworkWorkersItemList?cardNo="+$scope.cardNo+"&homeworkId="+$scope.homeworkId
-                +"&beginTime="+enume.getCDate($scope.beginDate)+"&endTime="+enume.getCDate($scope.endTime);
+                +"&beginTime="+enume.getCDate($scope.beginTime)+"&endTime="+enume.getCDate($scope.endTime);
         }
 
         $scope.pOption={

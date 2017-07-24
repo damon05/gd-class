@@ -32,7 +32,13 @@
                 <label>考卷标题：</label>
                 <input type="text" maxlength="200" class="width200" ng-model="Title" />
             </div>
-        </div>      
+        </div> 
+        <div class="searchRow clearfix">
+            <div class="left">
+                <label>考试类别：</label>
+                <select class="width200" ng-model="CategoryID" ng-options="m.code as m.name for m in wxExamCategory"></select>
+            </div>
+        </div>           
     </div>    
     <question-list ng-show="showQuestion" show-ck="{show:false}" show-add-btn="showButton" from="{val:'safe'}"></question-list>
     <div  style="margin-top:60px;text-align:center;">

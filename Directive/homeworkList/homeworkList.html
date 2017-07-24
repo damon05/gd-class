@@ -43,6 +43,7 @@
         <th>课程标题</th>        
         <th>工地</th>
         <th>状态</th>
+        <th>分数</th>
         <th>发布时间</th>
         <th>修改时间</th>
         <th>操作</th>
@@ -60,6 +61,7 @@
         <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==0">未发布</td>
         <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==1">已发布</td>
         <td style="word-wrap:break-word;" width="5%" ng-if="item.Status==2">已关闭</td>
+        <td style="word-wrap:break-word;" width="5%">{{item.Score}}</td>
         <td style="word-wrap:break-word;" width="5%">{{item.PublishTime}}</td>
         <td style="word-wrap:break-word;" width="5%">{{item.ModifyTime}}</td>
         <td width="10%">

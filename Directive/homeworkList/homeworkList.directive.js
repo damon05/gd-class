@@ -40,7 +40,7 @@ angular.module("app").directive("homeworkList",function(){
             }
 
             $scope.createHomework = function(){                
-                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", from: "safe", teachingCode: "", schoolID: "nlsex", homeworkType: 1 } });
+                $state.go("safeRoom.homeworkCreate", { entity: { tag: "add", from: "safe", teachingCode: "", schoolID: "", homeworkType: 1 } });
                
             }
 

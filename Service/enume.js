@@ -41,6 +41,7 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
         this.NIANJI = [{ name: "全部", code: "" }];
         this.homeworkType = [{ name: "全部", code: -1 }, { name: "基础模板", code: 0 }, { name: "普通考卷", code: 1 }];
         this.wxHomeworkScoreRule = [];
+        this.wxExamCategory = [];
 
         this.homeWorks = [{name:"请选择",code:"0"}];
 
@@ -397,6 +398,23 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
             }
         }
 
+        //获取所有考试类别
+        this.getwxExamCategory = function () {
+            if (this.wxExamCategory.length <= 0) {
+                var url = srvDomain + "/Dictionary/QueryByParentCode?parentCode=ExamCategory&pageIndex=1&pageSize=10000";
+
+                this.getData(url, function (tmp) {
+                    if (!tmp.datas) {
+                        return;
+                    }
+                    tmp = tmp.datas;
+                    for (var i = 0; i < tmp.length; i++) {
+                        that.wxExamCategory.push({ name: tmp[i].name, code: tmp[i].code });
+                    }
+                })
+            }
+        }
+
         this.init = function(){
             console.log("初始化枚举服务!");
             this.getTemplateCate();
@@ -417,6 +435,7 @@ angular.module('app').factory("enume",function($http,$state,$rootScope){
             this.getwxSchoolList();
             this.getwxHomeworkScoreRuleList();
             this.getHomeWorks();
+            this.getwxExamCategory();
         }
     }
 

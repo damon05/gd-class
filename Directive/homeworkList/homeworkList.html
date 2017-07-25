@@ -65,9 +65,9 @@
         <td style="word-wrap:break-word;" width="5%">{{item.ModifyTime}}</td>
         <td width="10%">
             <button ng-click="publish(item);" ng-show="item.Status==0&&item.HomeworkType==1" style="width:30px;">发布</button>
-            <button ng-click="edit(item);" ng-show="item.Status==0" style="width:30px;">修改</button>
-            <button ng-click="delete(item);" ng-show="item.Status==0" style="width:30px;">删除</button>
-            <button ng-click="detail(item);" ng-show="item.Status==1||item.Status==2" style="width:30px;">详情</button>
+            <button ng-click="edit(item);" ng-show="item.Status==0&&item.HomeworkType==1" style="width:30px;">修改</button>
+            <button ng-click="delete(item);" ng-show="item.Status==0&&item.HomeworkType==1" style="width:30px;">删除</button>
+            <button ng-click="detail(item);" ng-show="item.Status==1||item.Status==2||(item.Status==0&&item.HomeworkType==0)" style="width:30px;">详情</button>
             <button ng-click="closeHomework(item);" ng-show="item.Status==1&&item.HomeworkType==1" style="width:30px;">关闭</button>  
         </td>
     </tr>

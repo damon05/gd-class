@@ -1,0 +1,39 @@
+﻿<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://class.zhangsx.cn/resource/lib/jquery-1.11.2.min.js"></script>
+</head>
+<script > 
+function login() {
+	var _sqzh = $("#sqzh").val();
+	var _password= $("#password").val();
+	$.ajax({  
+	      type:'post',  
+	      url:'http://class.zhangsx.cn/cmsapi/login/tanentDoLogin',  
+	      data:{"sqzh":_sqzh,"password":_password,"type":1},  
+	      cache:false,  
+	      dataType:'json',  
+	      success:function(data){  
+	           if( data.status.code =="1" ) //服务器返回false，就将validatePassword2的值改为pwd2Error，这是异步，需要考虑返回时间  
+	           {  
+	                window.location.href="http://class.zhangsx.cn/#/safeRoom/homeworkList";
+	           }  
+	       },  
+	       error:function(){}  
+	 }); 
+}
+</script>
+<body>
+<div class="login-wrap ng-scope">
+    <div class="login-banner">
+        <div class="login-main">
+            <div class="login-inputs">
+                <input type="text" placeholder="请输入用户名" name="sqzh" id="sqzh">
+                <input type="password" placeholder="请输入密码" id="password" name="password">
+            </div>
+            <div class="login-btn"><a id="logina" onclick="login();">登 录</a></div>
+        </div>
+    </div>
+</div>
+</body></html>

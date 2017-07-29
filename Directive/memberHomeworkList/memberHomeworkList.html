@@ -26,9 +26,9 @@
         <th>身份证号</th>
         <th>姓名</th>
         <th>分数</th>
+        <th>得分率</th>
         <th>正确数</th>
-        <th>错误数</th>
-        <th>正确率</th>
+        <th>错误数</th>        
         <th>开始答题时间</th>
         <th>完成时间</th>
         <th>耗时</th>
@@ -42,9 +42,9 @@
         <td style="word-wrap: break-word; word-break: break-all;" width="15%">{{item.StudentNo}}</td>
         <td style="word-wrap: break-word; word-break: break-all;" width="5%">{{item.StudentName}}</td>
         <td style="word-wrap:break-word;" width="3%">{{item.Score}}</td>
-        <td style="word-wrap:break-word;" width="3%">{{item.CorrectCount}}</td>
-        <td style="word-wrap:break-word;" width="3%">{{item.WrongCount}}</td>
         <td style="word-wrap:break-word;" width="3%">{{item.CorrectRate}}%</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.CorrectCount}}</td>
+        <td style="word-wrap:break-word;" width="3%">{{item.WrongCount}}</td>        
         <td style="word-wrap:break-word;" width="6%">{{item.StartTime}}</td>
         <td style="word-wrap:break-word;" width="6%">{{item.EndTime}}</td>
         <td style="word-wrap:break-word;" width="6%">{{item.TimeUsed}}</td>

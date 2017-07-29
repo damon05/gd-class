@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人评测报告</title>
+    <style>
+        html,body{
+            padding: 0;margin: 0;font-size: 14px;color: #444;
+        }
+
+        h1,h2,p,div,img{
+            padding: 0;margin: 0;
+        }
+
+        h2{
+            margin-bottom: 20px;margin-top: 10px;border-bottom: 1px solid #444;
+            padding-bottom: 20px;
+        }
+
+        .box{
+            width: 700px;margin: 30px auto;text-align: center;
+        }
+
+        .info_box{
+            padding: 0 30px;box-sizing: border-box;
+        }
+
+        .left_box{
+            width: 400px;float: left;text-align: left;line-height: 36px;
+        }
+
+        .left_box table tr td{
+            padding: 0 10px;
+        }
+
+        .left_box table tr td:nth-child(1){
+            width: 120px;
+        }
+
+        .left_box table tr td:nth-child(2){
+            width: 280px;
+        }
+
+        .right_box{
+            width: 130px;float: right;
+        }
+
+        .clearfix::after{
+            content: '';width: 0;height: 0;display: block;clear: both;
+        }
+
+        .headimg{
+            width: 125px;border: 1px solid #666;height: 160px;line-height: 160px;
+        }
+
+        img{
+            vertical-align: middle;
+        }
+
+        .qr{
+            width: 125px;height: 125px;border: 1px solid #666;margin-top: 10px;
+        }
+
+        .info_box h1{
+            font-size: 18px;font-weight: 600;margin-top: 50px;margin-bottom: 20px;
+        }
+
+        .knowledge{
+            line-height: 30px;padding: 10px;border: 1px solid #666;text-align: left;
+        }
+        .appraise{
+            line-height: 30px;padding: 10px;border: 1px solid #666;text-align: left;margin-top: 20px;
+        }
+
+        .footer{
+            padding: 0 30px;text-align: left;
+        }
+
+        .footer div{
+            float: left;width: 213px;line-height: 50px;
+        }
+
+        .tc{
+            text-align: center;
+        }
+
+        .tr{
+            text-align: right;
+        }
+    </style>
+    <script src="resource/lib/jquery-1.11.2.min.js"></script>
+    <script src="resource/lib/jq.qrcode.min.js"></script>
+    <script src="resource/js/core.js"></script>
+</head>
+<body>
+<div class="box">
+    <h1 id="tanentName"></h1>
+    <h2>安立方安全教育体验馆个人评测报告</h2>
+    <div class="info_box clearfix">
+        <div class="left_box">
+            <p>学员姓名：<span id="name"></span></p>
+            <p>身份证号：<span id="cardNo"></span></p>
+            <p>考试时间：<span id="homeworkTime"></span></p>
+            <table border="1" cellspacing="0" cellpadding="0" id="tab1">
+                <tr>
+                    <td>机考成绩：</td>
+                    <td><span id="score"></span></td>
+                </tr>
+                <tr>
+                    <td>综合成绩：</td>
+                    <td><span id="zonghe"></span></td>
+                </tr>
+            </table>
+        </div>
+        <div class="right_box">
+            <div class="headimg"><img id="cardImage" /></div>
+            <div class="qr" id="code"></div>
+        </div>
+    </div>
+
+    <div class="info_box">
+        <h1>培训项目</h1>
+        <div class="knowledge" id="homeworkDescri">
+
+        </div>
+        <!--<div class="appraise">评语：经过系统培训本学员顺利通过安立方安全教育体验馆所有项目，特发此证以示证明。</div>-->
+    </div>
+
+    <div class="footer clearfix">
+        <div>评测人：<span id="name1"></span></div>
+        <div class="tc">审核：工地管理员</div>
+        <div class="tr">发证日期：<span id="makeTime"></span></div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    var gsid = jsCoreMethod.getQueryString("gsid");
+    var cardNo = jsCoreMethod.getQueryString("cardNo");
+
+     var selectData = [
+        {name:"无",code:"0"},
+        {name:"不及格",code:"70"},
+        {name:"及格",code:"80"},
+        {name:"良好",code:"90"},
+        {name:"优秀",code:"100"}
+    ]
+
+    function getVal(s){
+        var res = "";
+        for(var i=0;i<selectData.length;i++){
+            if(selectData[i].code == s.toString()){
+                res = selectData[i].name;
+                break;
+            }
+        }
+        return res;
+    }
+
+    //"安全意识:80,操作规范性:80,理论学习:80"
+    function renderTable(str){
+        var a = [];
+        var b = [];
+        var html = "";
+        var res = str.split(',');
+        for(var i=0;i<res.length;i++){
+            a.push(res[i].split(':')[0]);
+            b.push(res[i].split(':')[1]);
+        }
+        for(var i=0;i< a.length;i++){
+            html += "<tr>";
+            html += "<td>"+a[i]+":</td>";
+            html += "<td>"+getVal(b[i])+"</td>";
+        }
+        $("#tab1").append($(html));
+    }
+
+    $.ajax({
+        url:"/api/gd/studentItemsInfo?gsid="+gsid+"&cardNo="+cardNo,
+        success:function(d){
+            d = eval("("+d+")");
+            if(d.status.code == 1){
+                var tmp = d.data;
+                $("#tanentName").text(tmp.tanentName);
+                $("#name").text(tmp.name);
+                $("#name1").text(tmp.name);
+                $("#cardNo").text(tmp.cardNo);
+                $("#homeworkTime").text(new Date(tmp.homeworkTime).format());
+                $("#score").text(tmp.score);
+                $("#zonghe").text(getVal(tmp.zonghe));
+                $("#cardImage").attr("src",tmp.cardImage);
+                $("#homeworkDescri").html(tmp.homeworkDescri);
+                if(tmp.makeTime){
+                    $("#makeTime").text(new Date(tmp.makeTime).format());
+                }else{
+                    $("#makeTime").text("未发证");
+                }
+                renderTable(tmp.itemJson);
+            }else{
+                alert(d.status.message);
+            }
+        }
+    })
+
+    $("#code").qrcode({
+        render: "canvas", //table方式
+        width: 125, //宽度
+        height:125, //高度
+        text: "http://gd.class.zhongguoanquanjiaoyu.com/out.html?cardNo="+cardNo //任意内容
+    });
+</script>

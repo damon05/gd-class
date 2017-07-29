@@ -103,7 +103,12 @@ angular.module('app')
             $scope.addEditModal = false;
         }
 
+        $scope.person = function(item){
+            window.open("/person.html?gsid="+item.signId+"&cardNo="+item.studentNo,"newwindow","height=800, width=800");
+        }
+
         $scope.actions = [
+            {key:"report",val:"个人报表",action:$scope.person},
             {key:"edit",val:"评分",action:$scope.edit}
         ];
     })

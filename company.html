@@ -65,39 +65,96 @@
             text-align: right;
         }
     </style>
+    <script src="resource/lib/jquery-1.11.2.min.js"></script>
+    <script src="resource/lib/jq.qrcode.min.js"></script>
+    <script src="resource/js/core.js"></script>
+    <script src="resource/lib/echarts.min.js"></script>
 </head>
 <body>
 <div class="box">
-    <h1>中建一局</h1>
+    <h1 id="tanentName"></h1>
     <h2>安立方工地安全体验馆综合评测报告</h2>
     <div class="info_box clearfix">
         <div class="left_box">
-            <p>测评日期：2017年8月1日</p>
-            <p>签到人数：100 人</p>
-            <p>培训人数：100 人</p>
-            <p>问卷通过：100 人</p>
-            <p>评价通过：100 人</p>
-            <p>总得分率：100  %</p>
+            <p>测评日期：<span id="judgeDate"></span></p>
+            <p>签到人数：<span id="signCounts"></span> 人</p>
+            <p>培训人数：<span id="homeworkCounts"></span> 人</p>
+            <p>问卷通过：<span id="homeworkPass"></span> 人</p>
+            <p>评价通过：<span id="judgePass"></span> 人</p>
         </div>
-        <div class="right_box"></div>
+        <div class="right_box" id="_chart"></div>
     </div>
 
     <div class="info_box">
         <h1>培训项目</h1>
-        <div class="knowledge">
-            洞口坠落体验 安全绳缓降体验  平台倾倒体验  防护栏推到体验 安全帽撞击体验 安全鞋防砸体验  重物搬运体验  挡土墙体验
-            工地用电安全体验  平衡木体验设备 安全防护用品体验  钢丝绳使用方法 止血包扎 爬梯体验  小型配电箱防护网  尝试认识与学习
-            心肺复苏体验
-        </div>
-        <div class="appraise">评语：经过系统培训本学员顺利通过安立方安全教育体验馆所有项目，特发此证以示证明。</div>
-    </div>
+        <div class="knowledge" id="homeworkDescri">
 
-    <div class="footer clearfix">
-        <div>评测人：王宝宝</div>
-        <div class="tc">审核：任老师</div>
-        <div class="tr">发证日期：2017-05-06</div>
+        </div>
     </div>
 </div>
-
 </body>
 </html>
+<script>
+    var gsid = jsCoreMethod.getQueryString("gsid");
+    var myChart = echarts.init(document.getElementById("_chart"));
+
+    $.ajax({
+        url:"/api/gd/signItemsInfo?gsid="+gsid,
+        success:function(d){
+            d = eval("("+d+")");
+            if(d.status.code == 1){
+                var tmp = d.data;
+                setOption(tmp.bujigeCounts,tmp.jigeCounts,tmp.lianghaoCounts,tmp.youxiuCounts);
+                $("#tanentName").text(tmp.tanentName);
+                $("#judgeDate").text(new Date(tmp.judgeDate).format());
+                $("#signCounts").text(tmp.signCounts);
+                $("#homeworkCounts").text(tmp.homeworkCounts);
+                $("#homeworkPass").text(tmp.homeworkPass);
+                $("#judgePass").text(tmp.judgePass);
+                $("#homeworkDescri").html(tmp.homeworkDescri);
+            }else{
+                alert(d.status.message);
+            }
+        }
+    })
+
+    function setOption(a,b,c,d){
+        var option  = {
+            title : {
+                text: '某站点用户访问来源',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['不及格','及格','良好','优秀']
+            },
+            series : [
+                {
+                    name: '成绩',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:a, name:'不及格'},
+                        {value:b, name:'及格'},
+                        {value:c, name:'良好'},
+                        {value:d, name:'优秀'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>

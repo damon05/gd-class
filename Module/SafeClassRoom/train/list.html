@@ -1,14 +1,14 @@
 <div class="navigation">我的应用 > 培训评分内容列表</div>
 
-<div class="searchRow clearfix">
-    <div class="left">
-        <label>选择考卷：</label>
-        <select ng-options="m.code as m.name for m in homeWorks" class="width287" ng-model="homeworkId"></select>
-    </div>
-</div>
+<!--<div class="searchRow clearfix">-->
+    <!--<div class="left">-->
+        <!--<label>选择考卷：</label>-->
+        <!--<select ng-options="m.code as m.name for m in homeWorks" class="width287" ng-model="homeworkId"></select>-->
+    <!--</div>-->
+<!--</div>-->
 
 <div class="mt10">
-    <button class="btnGreen ml65" ng-click="search();">查询</button>
+    <!--<button class="btnGreen ml65" ng-click="search();">查询</button>-->
     <button class="btnGreen ml65" ng-click="addPf();">增加评分项</button>
 </div>
 
@@ -32,12 +32,6 @@
                             <label class="col-sm-3 control-label">工地名称 <i class="text-danger">*</i>:</label>
                             <div class="col-sm-6">
                                 <input type="text" class="form-control input-sm" ng-model="gd_name" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-show="addTag">
-                            <label class="col-sm-3 control-label">试卷名称 <i class="text-danger">*</i>:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control input-sm" ng-model="sj_name" readonly>
                             </div>
                         </div>
                         <div class="form-group">

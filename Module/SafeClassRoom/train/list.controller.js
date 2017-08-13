@@ -20,14 +20,12 @@ angular.module('app')
         }
 
         $scope.getUrl = function(){
-            return "/cmsapi/gd/homeworkItems?homeworkId="+$scope.homeworkId;
+            return "/cmsapi/gd/currentJudgeItem";
         }
 
         $scope.map = [
             {key:"tanentId",val:"工地编码",show:true},
             {key:"tanentName",val:"工地名称",show:true},
-            {key:"homeworkId",val:"考卷ID",show:true},
-            {key:"homeworkName",val:"考卷名称",show:true},
             {key:"itemNames",val:"评分内容",show:true}
         ];
 
@@ -60,7 +58,6 @@ angular.module('app')
             selectItem = item;
             $scope.addEditModal = true;
             $scope.gd_name = item.tanentName;
-            $scope.sj_name = item.homeworkName;
 
             if(item.itemNames != ""){
                 $scope.list = [];
@@ -78,13 +75,9 @@ angular.module('app')
             }
             var url = "";
             if(!$scope.addTag){
-                if($scope.homeworkId == "0"){
-                    alert("请选择考卷");
-                    return;
-                }
-                url = "/cmsapi/gd/addHomeworkItems?homeworkId="+$scope.homeworkId+"&items="+res.join(',')
+                url = "/cmsapi/gd/updateCurrentJudgeItem?tanentId=&items="+res.join(',');
             }else{
-                url = "/cmsapi/gd/updateHomeworkItems?homeworkId="+selectItem.homeworkId+"&items="+res.join(',')
+                url = "/cmsapi/gd/updateCurrentJudgeItem?tanentId="+selectItem.tanentId+"&items="+res.join(',');
             }
 
             enume.postData(url,null,function(d){
@@ -99,10 +92,6 @@ angular.module('app')
         ];
 
         $scope.addPf = function(){
-            if($scope.homeworkId == "0"){
-                alert("请选择考卷");
-                return;
-            }
             $scope.list = [];
             $scope.addTag = false;
             $scope.addEditModal = true;
